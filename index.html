@@ -111,16 +111,16 @@ header h1 sup{font-size:.55em;color:var(--text-2);margin-left:2px}
 .bchips button i{width:9px;height:9px;border-radius:50%;background:var(--c)}
 .bchips button[aria-pressed="true"]{border-color:var(--c);color:var(--text);box-shadow:inset 0 0 0 1px var(--c)}
 .bchips button.lock{opacity:.4;cursor:default}
-.card{background:var(--bone);color:var(--char);border-radius:8px;padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;
-  box-shadow:0 0 0 2px var(--char),0 0 0 4px var(--bone-2),0 10px 22px rgba(0,0,0,.45);margin:4px;position:relative;min-height:170px}
+.card{background:var(--bone);color:var(--char);border-radius:8px;padding:9px 12px 10px;display:flex;flex-direction:column;gap:6px;
+  box-shadow:0 0 0 2px var(--char),0 0 0 4px var(--bone-2),0 10px 22px rgba(0,0,0,.45);margin:4px;position:relative;min-height:112px}
 .card.enter{animation:enter .24s ease-out}
 @keyframes enter{from{transform:translateY(-10px) rotate(-1deg);opacity:0}to{transform:none;opacity:1}}
 .c-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .tag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:3px 7px;border-radius:3px;color:#fbf6ea;background:var(--bc,#666)}
 .kind{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-.c-name{margin:0;font-family:var(--f-disp);font-weight:400;font-size:32px;line-height:1;text-wrap:balance}
-.c-sub{margin:2px 0 0;font-size:13px;color:var(--muted);font-weight:600}
-.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--bone-2);border-radius:5px;padding:7px 10px;font-weight:700;font-size:14px}
+.c-name{margin:0;font-family:var(--f-disp);font-weight:400;font-size:24px;line-height:1.05;text-wrap:balance}
+.c-sub{margin:1px 0 0;font-size:12px;color:var(--muted);font-weight:600}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--bone-2);border-radius:5px;padding:5px 9px;font-weight:700;font-size:13px}
 .row.warn{background:#f3d3c4;color:#8a2e22}
 .row small{font-weight:600;color:var(--muted)}
 .rs{display:inline-flex;align-items:center;gap:2px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -147,6 +147,14 @@ header h1 sup{font-size:.55em;color:var(--text-2);margin-left:2px}
 .uses .btn svg{width:15px;height:15px}
 .road{position:relative;border-radius:8px;overflow:hidden;border:2px solid var(--line);background:#0e141b;height:156px}
 .road canvas{display:block;width:100%;height:152px;image-rendering:pixelated}
+.road .strip{position:absolute;left:6px;right:6px;top:6px;gap:4px;pointer-events:none}
+.road .stk{background:rgba(20,28,38,.78);border-color:rgba(255,255,255,.14);padding:2px 6px;font-size:11px;backdrop-filter:blur(2px)}
+.road .stk b{font-size:12px}.road .stk svg{width:14px;height:14px}
+.road .stk.bio{border-color:color-mix(in srgb,var(--c) 80%,transparent)}
+.road .stk.up{background:rgba(60,110,50,.9)}
+.adv-mode .goal .q-h{display:none}
+.card .row>svg{width:18px;height:18px;flex:none}
+.adv-mode .goal{padding:8px 12px;gap:4px}
 .biome{position:absolute;left:8px;top:6px;font-family:var(--f-disp);font-size:18px;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,.6),0 0 6px rgba(0,0,0,.4)}
 .losses{margin:6px 0 14px;padding-left:18px;line-height:1.5;color:inherit;font-size:15px}.losses li::marker{color:var(--bad)}
 .lethal{color:var(--bad);font-size:12px;margin-left:4px;text-transform:uppercase}
@@ -347,7 +355,7 @@ header h1 span,.logo span{color:var(--text)}
 
   <div id="pageAdv" class="page">
     <div class="bchips" id="bchips"></div>
-    <div class="strip" id="strip" aria-label="Stock"></div>
+    <div class="road"><canvas id="road" aria-label="Le chemin de ton héros"></canvas><div class="biome" id="biome" hidden></div><div class="strip" id="strip" aria-label="Stock"></div></div>
     <div class="bossf" id="bossF" hidden>
       <div class="bf-h"><b id="bfName" class="disp"></b><span id="bfTime">12.0 s</span></div>
       <div class="tbar"><i id="bfTimeBar"></i></div>
@@ -358,7 +366,6 @@ header h1 span,.logo span{color:var(--text)}
     <div class="card" id="card"></div>
     <div class="actions"><button class="btn" id="bPass">Passer</button><button class="btn main" id="bMain">Récolter</button></div>
     <div class="deckline"><span id="deckInfo"></span><span class="uses" id="uses"></span></div>
-    <div class="road"><canvas id="road" aria-label="Le chemin de ton héros"></canvas><div class="biome" id="biome"></div></div>
   </div>
 
   <div id="pageCamp" class="page" hidden>
@@ -393,6 +400,7 @@ header h1 span,.logo span{color:var(--text)}
   <div class="mview" id="mHome">
     <h1 class="logo-wrap"><canvas class="logo-cv" id="menuCv" role="img" aria-label="LogisticAdventure"></canvas><span class="sr">LogisticAdventure</span></h1>
     <p class="tagline">Un logisticien perdu dans un monde fantastique. Pas d'épée, pas de carte : juste un sens aigu des flux.</p>
+    <p class="hint2" id="mVer" style="text-align:center;opacity:.6;font-size:11px;margin:0"></p>
     <button class="mbtn main" id="mContinue">Continuer<small id="mSave"></small></button>
     <button class="mbtn" id="mNew">Nouvelle partie</button>
     <button class="mbtn" id="mSlots">Sauvegardes<small id="mSlotSub"></small></button>
@@ -430,6 +438,7 @@ header h1 span,.logo span{color:var(--text)}
 
 <script>
 const $=id=>document.getElementById(id);
+const BUILD='Version 3.1 · aventure compacte';
 const S16=b=>`<svg viewBox="0 0 16 16" aria-hidden="true">${b}</svg>`;
 const IC={
  bois:S16('<rect x="1" y="5" width="11" height="6.5" rx="1.5" fill="#a8703a"/><rect x="3" y="7" width="5" height="1" fill="#7a4c22"/><ellipse cx="12.3" cy="8.2" rx="2.6" ry="3.3" fill="#e2b47a"/><ellipse cx="12.3" cy="8.2" rx="1.1" ry="1.5" fill="#a8703a"/>'),
@@ -823,10 +832,9 @@ function goalText(){
 function cardHTML(){
  const u=curU();if(!u)return'';const d=curD(),B=BIOMES[d.b];
  const kind=d.t==='hub'?'Entrepôt':d.t==='helmet'?'Objet':d.t==='cache'?'Découverte':d.t==='res'?'Récolte':d.t==='mon'?'Monstre':d.t==='path'?'Passage':d.fin?'Boss final':'Boss du biome';
- let h=`<div class="c-head"><span class="tag" style="--bc:${B.c}">${B.n}</span><span class="kind">${kind}</span></div><div><h2 class="c-name">${d.n}</h2><p class="c-sub">${d.s}</p></div>`;
+ let h=`<div><div class="c-head"><h2 class="c-name">${d.n}</h2><span class="kind" style="color:${B.c}">${kind}</span></div><p class="c-sub">${d.s}</p></div>`;
  if(d.t==='res'){const y=yieldOf(d);
   h+=`<div class="row">Récolte ${resL(y)}${outLv(d.b)?` <small>outils ×${outLv(d.b)+1}</small>`:''}</div>`;
-  h+=`<div class="row"><small>En stock</small> ${Object.keys(y).map(k=>`${ri(k,have(k))}<small>/${fmt(cap())}</small>`).join(' ')}</div>`;
   if(d.tool&&!S.pioche)h+=`<div class="row warn">Il faut une pioche : fabrique-la au Dépôt des Collines</div>`;
  }else if(d.t==='mon'){const f=fightOf(d);
   h+=`<div class="mon"><div class="mon-s"><span>${IC.h} PV <b>${f.hp}</b></span><span>Armure <b>${f.arm}</b></span><span>Chrono <b>${f.dur/1000} s</b></span></div><p>Butin ${resL(d.loot)}</p></div>`;
@@ -865,7 +873,7 @@ function renderAdv(anim){
 }
 let STK={},STKG={};
 function updStrip(){const bio=BIOMES[S.biome].raw,c=BIOMES[S.biome].c,now=Date.now();
- const ks=bio.concat(S.known.filter(k=>!bio.includes(k)));
+ const ks=bio;
  setH($('strip'),ks.map(k=>{const v=have(k),p=STK[k];if(p!=null&&v>p+0.5)STKG[k]={n:Math.round(v-p),t:now};STK[k]=v;const g=STKG[k]&&now-STKG[k].t<1600?STKG[k]:null;
   return `<div class="stk${bio.includes(k)?' bio':''}${v>=cap()?' full':''}${g&&bio.includes(k)?' up':''}" style="--c:${c}" title="${RES[k].n}">${IC[k]}<b>${fmt(v)}</b>${bio.includes(k)?`<small>/${fmt(cap())}</small>`:''}${g&&bio.includes(k)?`<span class="gain">+${g.n}</span>`:''}</div>`}).join(''))}
 
@@ -896,7 +904,7 @@ function liveCamp(){if(TAB!=='camp'||CT==='grid')return;const body=$('campBody')
  body.querySelectorAll('[data-pb]').forEach(el=>{const st=S.posts[el.dataset.pb];el.style.width=(st.blk?100:Math.min(1,st.p||0)*100)+'%';el.parentNode.classList.toggle('blk',!!st.blk||!st.on)});
  body.querySelectorAll('[data-tap]').forEach(el=>el.classList.toggle('dim',maxBatches(PO[el.dataset.tap])<1));
 }
-function setTab(t){if(BF)return;TAB=t;setTimeout(renderGoal,0);$('pageAdv').hidden=t!=='adv';$('pageCamp').hidden=t!=='camp';$('tAdv').setAttribute('aria-pressed',String(t==='adv'));$('tCamp').setAttribute('aria-pressed',String(t==='camp'));
+function setTab(t){if(BF)return;TAB=t;document.body.classList.toggle('adv-mode',t==='adv');setTimeout(renderGoal,0);$('pageAdv').hidden=t!=='adv';$('pageCamp').hidden=t!=='camp';$('tAdv').setAttribute('aria-pressed',String(t==='adv'));$('tCamp').setAttribute('aria-pressed',String(t==='camp'));
  if(t==='camp')renderCamp();else{scene.size();renderAdv(false)}pickSong();window.scrollTo({top:0})}
 function pickSong(){if(!$('menu').hidden)return AU.music('menu');if(!$('end').hidden)return AU.music('victoire');if(TAB==='camp')return AU.music('camp');AU.music(S?S.biome:'foret')}
 function showEnd(){const r=RECS.find(x=>x.time===S.winTime)||{time:S.time},rank=RECS.indexOf(r)+1;
@@ -934,7 +942,7 @@ function openMenu(){try{paintLogo()}catch(e){}const pr=pristine();const c=$('mCo
  $('mSave').textContent=pr?'Aucune partie en cours':`Emplacement ${OPT.slot} · ${BIOMES[S.biome].n} · ${fmtT(S.time)} · ${S.bossWon.length} biome${S.bossWon.length>1?'s':''} automatisé${S.bossWon.length>1?'s':''}`;
  c.className='mbtn'+(pr?'':' main');$('mNew').className='mbtn'+(pr?' main':'');
  const used=[1,2,3].filter(n=>n===OPT.slot?!pr:slotData(n)).length;$('mSlotSub').textContent=`${used}/3 emplacement${used>1?'s':''} utilisé${used>1?'s':''}`;
- $('mRecSub').textContent=RECS.length?`Meilleur temps : ${fmtT(RECS[0].time)}`:'Aucune victoire pour l’instant';
+ $('mVer').textContent=BUILD;$('mRecSub').textContent=RECS.length?`Meilleur temps : ${fmtT(RECS[0].time)}`:'Aucune victoire pour l’instant';
  mView('mHome');$('menu').hidden=false;AU.music('menu')}
 function closeMenu(){$('menu').hidden=true;pickSong();showAway()}
 let SLM='load';const ARM={};
@@ -1814,7 +1822,7 @@ function start(data){
  let n=OPT.slot;if(!slotData(n)){const r=[1,2,3].map(i=>[i,slotData(i)]).filter(x=>x[1]).sort((a,b)=>b[1].m.at-a[1].m.at)[0];n=r?r[0]:1}
  OPT.slot=n;saveOpt();
  if(!load(n))newGame();
- scene.reset();renderAll(true);openMenu();
+ scene.reset();document.body.classList.toggle('adv-mode',TAB==='adv');renderAll(true);openMenu();
 }
 window.claude?.hot?.snapshot?.(()=>({S}));
 window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
