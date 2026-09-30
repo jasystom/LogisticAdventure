@@ -50,6 +50,10 @@ header h1 sup{font-size:.55em;color:var(--text-2);margin-left:2px}
 .enb{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;font-size:12px;color:var(--text-2)}
 .bar{height:8px;background:var(--night);border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;background:var(--energy);transition:width .2s}
 .bar.hp i{background:#e8475a}
+#fInfo:not(:empty){position:sticky;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:20;max-height:40vh;overflow:auto;border-radius:10px;box-shadow:0 -10px 28px rgba(0,0,0,.55);margin-top:8px}
+#fInfo:not(:empty)>.panel{border-color:var(--copper)}
+.fx-close{position:sticky;top:6px;float:right;margin:6px 6px -40px 0;z-index:2;width:34px;height:34px;border-radius:8px;background:var(--panel-2);border:1px solid var(--line);font-size:20px;line-height:1;color:var(--text)}
+#fInfo .panel>.p-h,#fInfo .panel>b:first-child{padding-right:40px}
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:25;display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(20,28,38,.96);border-top:1px solid var(--line);padding:8px max(12px,calc(50% - 218px)) calc(8px + env(safe-area-inset-bottom,0px));backdrop-filter:blur(6px)}
 .tabs button{position:relative;padding:8px 6px;border-radius:8px;font-weight:800;font-size:14px;color:var(--text-2);display:flex;flex-direction:column;align-items:center;gap:2px}
 .tabs button svg{width:22px;height:22px}
@@ -1182,13 +1186,14 @@ function replaceChain(m){const p=PO[m.r];if(!S.bossWon.includes(p.b))return;cons
  AU.fx('explore');fPop(a,'AUTO','#8ff08a');toast(`${ch.length} élément${ch.length>1?'s':''} retiré${ch.length>1?'s':''} et remboursé${ch.length>1?'s':''} : ${autoName(p)} installée`);fChanged()}
 function upAuto(e){const p=PO[e.r],c=postUp(p,e.lv);if(!canPay(c))return nope(c);pay(c);e.lv++;S.acts++;AU.fx('forge');toast(`${autoName(p)} niveau ${e.lv}`);fChanged()}
 function expandGrid(){const c=GRIDC[S.F.w];if(!c||S.F.w>=GRID_MAX)return;if(!canPay(c))return nope(c);pay(c);S.F.w++;S.F.h++;S.acts++;AU.fx('explore');toast(`Camp agrandi : ${S.F.w} × ${S.F.h}`);fChanged();renderCamp()}
+function gridToTop(){const c=$('campCv');if(!c)return;const r=c.getBoundingClientRect();if(r.top>70||r.top<0)window.scrollTo({top:window.scrollY+r.top-8,behavior:'smooth'})}
 function fChanged(){fIndex();renderFInfo(true);renderGoal();save()}
 let MOVE=null;
 function moveTo(e,x,y){if(!e||e.t==='wh'||x<0||y<0||x>=S.F.w||y>=S.F.h)return false;const o=fAt(x,y);if(o&&o!==e){AU.fx('click');toast('Cette case est occupée');return false}
  e.x=x;e.y=y;S.acts++;AU.fx('forge');MOVE=null;SELE=e.id;fChanged();return true}
 function tapCell(x,y){const e=fAt(x,y);
  if(MOVE){const m=S.F.ents[MOVE];if(!m||e===m){MOVE=null;return renderFInfo(true)}if(!e)return moveTo(m,x,y);AU.fx('click');return toast('Choisis une case libre')}
- if(TOOL==='hand'){if(!e){SELE=null;return renderFInfo(true)}SELE=e.id;if(e.t==='dist')pour(e);else AU.fx('click');return renderFInfo(true)}
+ if(TOOL==='hand'){if(!e){SELE=null;return renderFInfo(true)}const was=SELE;SELE=e.id;if(e.t==='dist')pour(e);else AU.fx('click');renderFInfo(true);if(was!==e.id)gridToTop();return}
  if(TOOL==='demo'){if(e&&e.t!=='wh')demolish(e);return}
  if(!e)return place(x,y);
  if((e.t==='dist'&&TOOL==='dist')||(e.t==='mach'&&TOOL==='mach')){e.d=(e.d+1)%4;AU.fx('click');fChanged();return}
@@ -1283,7 +1288,8 @@ function subHTML(){
  if(TOOL==='auto'){const ps=POSTES.filter(p=>S.bossWon.includes(p.b));return `<p class="hint">Un automate puise directement dans l'entrepôt et y range sa production. Pas besoin de tapis. Pour remplacer une chaîne existante, touche sa machine avec la Main.</p><div class="mlist">${ps.map(p=>{const c=autoCost(p,autoCount(p.id));return `<button class="mi" data-pk="auto:${p.id}" aria-pressed="${PICK.auto===p.id}"><b>${autoName(p)}</b><span class="recipe">${recipe(p)}</span><span class="cost">${costL(c)}</span></button>`}).join('')}</div>`}
  if(TOOL==='demo')return '<p class="hint">Touche un élément pour le démolir. Tout est remboursé, y compris les matières qu’il transportait.</p>';
  return `<p class="hint">Touche un distributeur pour y verser ${DIST_LOAD} matières. Touche un élément pour le voir, glisse-le pour le déplacer.</p>`}
-function infoHTML(){const e=SELE&&S.F.ents[SELE];if(!e)return'';if(MOVE===e.id)return `<div class="panel"><b>Déplacement</b><p class="hint">Touche une case libre de la grille. Touche l’élément lui-même pour annuler.</p><div class="selb"><button class="btn sm" data-fx="move">Annuler</button></div></div>`;
+function infoHTML(){const h=infoHTML0();return h?'<button class="fx-close" data-fx="close" aria-label="Fermer">×</button>'+h:''}
+function infoHTML0(){const e=SELE&&S.F.ents[SELE];if(!e)return'';if(MOVE===e.id)return `<div class="panel"><b>Déplacement</b><p class="hint">Touche une case libre de la grille. Touche l’élément lui-même pour annuler.</p><div class="selb"><button class="btn sm" data-fx="move">Annuler</button></div></div>`;
  if(e.t==='wh')return `<div class="panel"><b>Entrepôt</b><p class="hint">Tout ce qui arrive ici par un tapis est rangé dans ton stock : ${fmt(cap())} places par ressource. Il se développe dans l'onglet Entrepôt.</p></div>`;
  if(e.t==='belt')return `<div class="panel"><b>Tapis ${ARW[e.d]}</b><p class="hint">${e.item?`Transporte : ${RES[e.item.k].n.toLowerCase()}`:'Vide'}</p><div class="selb"><button class="btn sm" data-fx="rot">Tourner</button><button class="btn sm" data-fx="move">Déplacer</button><button class="btn sm ghost" data-fx="del">Démolir</button></div></div>`;
  if(e.t==='dist')return `<div class="panel"><div class="p-h"><b>Distributeur · ${RES[e.k].n}</b><span class="pst" data-fst></span></div><p class="hint">Stock : <b data-fv="${e.k}">${fmt(have(e.k))}</b> · Sens ${ARW[e.d]}</p>
@@ -1311,6 +1317,7 @@ function liveFInfo(){const box=$('fInfo');if(!box||!S)return;const e=SELE&&S.F.e
  $('campBody').querySelectorAll('.cst').forEach(el=>el.classList.toggle('lack',have(el.dataset.k)<+el.dataset.n-1e-9));
  $('campBody').querySelectorAll('[data-need]').forEach(el=>{el.disabled=!canNeed(el.dataset.need)})}
 function fClick(t){const ds=t.dataset,e=SELE&&S.F.ents[SELE];
+ if(ds.fx==='close'){SELE=null;MOVE=null;AU.fx('click');return renderFInfo(true)}
  if(ds.tool){TOOL=ds.tool;if(TOOL==='auto'&&!PICK.auto){const p=POSTES.find(p=>S.bossWon.includes(p.b));PICK.auto=p&&p.id}if(TOOL!=='hand'&&TOOL!=='demo')SELE=null;AU.fx('click');return renderFInfo(true)}
  if(ds.pk){const[k,v]=ds.pk.split(':');PICK[k]=v;AU.fx('click');return renderFInfo(true)}
  if(ds.fk&&e&&e.t==='dist'){if(e.pend){add(e.k,e.pend);e.pend=0}e.k=ds.fk;AU.fx('click');return fChanged()}
