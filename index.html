@@ -54,6 +54,28 @@ header h1 sup{font-size:.55em;color:var(--text-2);margin-left:2px}
 #fInfo:not(:empty)>.panel{border-color:var(--copper)}
 .fx-close{position:sticky;top:6px;float:right;margin:6px 6px -40px 0;z-index:2;width:34px;height:34px;border-radius:8px;background:var(--panel-2);border:1px solid var(--line);font-size:20px;line-height:1;color:var(--text)}
 #fInfo .panel>.p-h,#fInfo .panel>b:first-child{padding-right:40px}
+.ftools{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:8px}
+.ftools button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px 5px;border-radius:8px;background:var(--panel);border:1px solid var(--line);color:var(--text-2);font-size:10.5px;font-weight:700}
+.ftools button svg{width:22px;height:22px}
+.ftools button[aria-pressed="true"]{background:var(--copper);border-color:var(--copper);color:var(--char)}
+.tip{margin:6px 2px 0;font-size:12.5px}
+.ftools{margin:8px 0 6px}
+.strip2{display:flex;gap:4px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:thin}
+.strip2 button{position:relative;flex:none;display:flex;flex-direction:column;align-items:center;gap:1px;min-width:48px;padding:5px 4px;border-radius:7px;background:var(--panel);border:1px solid var(--line);font-size:10px;font-weight:700;color:var(--text-2)}
+.strip2 button svg{width:20px;height:20px}
+.strip2 button[aria-pressed="true"]{border-color:var(--copper);color:var(--text);box-shadow:inset 0 0 0 1px var(--copper)}
+.strip2 i.au{position:absolute;right:3px;top:3px;width:7px;height:7px;border-radius:50%;background:var(--energy)}
+.sline{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:2px 0 8px;font-size:12px;color:var(--text-2)}
+.sline .recipe,.sline span{line-height:1.5}.sline svg{width:15px;height:15px;vertical-align:-3px}
+.sline .orirow button{width:32px;height:30px;font-size:16px}
+#hubIn .urow{background:#e6dcc4;border-color:#cdbf9f;color:var(--char)}
+#hubIn .urow p,#hubIn .urow small{color:#6f6552}
+#hubIn .urow .btn.sm:disabled{background:#d6caae;border-color:#c2b492;color:#8a7f68}
+#hubIn .grp{color:#8a7a5a}
+.pick i.au{position:absolute;right:2px;top:2px;width:7px;height:7px;border-radius:50%;background:var(--energy)}
+.pick button{position:relative}
+.selb .ic{min-width:40px;font-size:17px;padding-left:8px;padding-right:8px}
+.hub-img{margin-top:4px}
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:25;display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(20,28,38,.96);border-top:1px solid var(--line);padding:8px max(12px,calc(50% - 218px)) calc(8px + env(safe-area-inset-bottom,0px));backdrop-filter:blur(6px)}
 .tabs button{position:relative;padding:8px 6px;border-radius:8px;font-weight:800;font-size:14px;color:var(--text-2);display:flex;flex-direction:column;align-items:center;gap:2px}
 .tabs button svg{width:22px;height:22px}
@@ -151,7 +173,7 @@ header h1 sup{font-size:.55em;color:var(--text-2);margin-left:2px}
 .bf-hit.pulse{animation:hitp .12s ease-out}
 @keyframes hitp{50%{transform:translateY(3px) scale(.98);box-shadow:0 2px 0 var(--copper-d)}}
 /* camp */
-.subtabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.subtabs{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;border-bottom:1px solid var(--line);padding-bottom:6px}
 .subtabs button{padding:7px 4px;border-radius:5px;font-weight:700;font-size:13px;color:var(--text-2)}
 .subtabs button[aria-pressed="true"]{color:var(--text);background:var(--panel-2)}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:8px}
@@ -340,7 +362,7 @@ header h1 span,.logo span{color:var(--text)}
   </div>
 
   <div id="pageCamp" class="page" hidden>
-    <nav class="subtabs" aria-label="Sections du camp"><button data-ct="grid" aria-pressed="true">Atelier</button><button data-ct="wh" aria-pressed="false">Entrepôt</button><button data-ct="up" aria-pressed="false">Améliorations</button></nav>
+    <nav class="subtabs" aria-label="Sections du camp"><button data-ct="grid" aria-pressed="true">Atelier</button><button data-ct="wh" aria-pressed="false">Stock</button></nav>
     <div id="campBody" class="page"></div>
   </div>
 
@@ -351,18 +373,20 @@ header h1 span,.logo span{color:var(--text)}
   <div class="sheet-in">
     <div class="sheet-top"><h2>Comment jouer</h2><button class="x" id="bRulesX" aria-label="Fermer">×</button></div>
     <div class="how">
-      <div><b>1</b><p><strong>Aventure</strong> · récolte les matières brutes. 1 récolte = 1 point d'endurance, qui revient tout seul.</p></div>
-      <div><b>2</b><p><strong>Camp</strong> · un distributeur sort une matière de l'entrepôt, un tapis l'amène à une machine, un autre tapis rapporte le produit.</p></div>
-      <div><b>3</b><p><strong>À la main</strong> · touche un distributeur pour y verser 10 matières. Trace les tapis en glissant le doigt.</p></div>
-      <div><b>4</b><p><strong>Boss</strong> · bats le boss d'un biome et remplace ses chaînes par un automate d'une seule case, qui tourne même hors du jeu.</p></div>
-      <div><b>5</b><p><strong>Explorer</strong> · les passages vers les biomes suivants s'ouvrent avec des produits transformés.</p></div>
-      <div><b>6</b><p><strong>Mourir</strong> · tomber face à un monstre vide l'atelier et fait revenir le dernier boss battu, avec la perte de ses automates, préparateurs et chariot. Perdre contre un boss te renvoie seulement au début du paquet.</p></div>
+      <div><b>1</b><p><strong>Aventure</strong> · récolte les matières premières. 1 récolte = 1 point d'endurance, qui revient tout seul.</p></div>
+      <div><b>2</b><p><strong>Atelier</strong> · un distributeur sort une matière du stock, un tapis l'amène à une machine, un autre rapporte le produit.</p></div>
+      <div><b>3</b><p><strong>Quais</strong> · l'entrepôt ne reçoit que par ses quais (zones jaunes). Enchaîne les machines entre elles et partage les tapis avec des répartiteurs.</p></div>
+      <div><b>4</b><p><strong>Boss</strong> · bats le boss d'un biome : les distributeurs de ses matières deviennent automatiques.</p></div>
+      <div><b>5</b><p><strong>Entrepôt du biome</strong> · première carte de chaque paquet : préparateurs, chariot, outils, forge.</p></div>
+      <div><b>6</b><p><strong>Explorer</strong> · les passages vers les biomes suivants s'ouvrent avec des produits transformés.</p></div>
+      <div><b>7</b><p><strong>Mourir</strong> · tomber face à un monstre vide l'atelier et fait revenir le dernier boss battu, avec la perte de ses préparateurs et de son chariot. Perdre contre un boss te renvoie seulement au début du paquet.</p></div>
     </div>
     <p class="hint2">La carte « Étape » en haut de l'écran te guide pas à pas et te récompense à chaque étape.</p>
     <button class="btn main" id="bRulesOk">Compris</button>
   </div>
 </div>
 <div class="sheet" id="end" hidden><div class="sheet-in" id="endIn"></div></div>
+<div class="sheet" id="hub" hidden><div class="sheet-in" id="hubIn"></div></div>
 <div class="sheet" id="away" hidden><div class="sheet-in" id="awayIn"></div></div>
 
 <div class="menu" id="menu" hidden><div class="menu-in">
@@ -584,7 +608,7 @@ function saveOpt(){try{localStorage.setItem('cv2-options',JSON.stringify(OPT))}c
 let RECS=[];try{RECS=JSON.parse(localStorage.getItem('cv2-records')||'[]')||[]}catch(e){RECS=[]}
 function saveRecs(){try{localStorage.setItem('cv2-records',JSON.stringify(RECS))}catch(e){}}
 function fresh(){return{v:2,day:1,turn:0,acts:0,biome:'foret',unlocked:['foret'],paid:[],known:['bois','baies','fibres'],
- res:Object.fromEntries(RK.map(k=>[k,0]),),wh:1,F:null,posts:{},bossWon:[],coll:{},outils:{},hero:{train:0,endu:0,recup:0,vigueur:0},pioche:0,
+ res:Object.fromEntries(RK.map(k=>[k,0]),),tips:{},wh:1,F:null,posts:{},bossWon:[],coll:{},outils:{},hero:{train:0,endu:0,recup:0,vigueur:0},pioche:0,
  tier:{arme:0,bouclier:0,armure:0,casque:0,bottes:0},eq:{arme:0,bouclier:0,armure:0,casque:0,bottes:0},
  hp:4,en:10,st:{pour:0,made:{},harv:{}},q:0,enT:0,hpT:0,cards:{},queue:[],uid:0,kills:0,win:false,winTime:0,time:0,last:Date.now(),over:false,started:Date.now(),fork:{},recipes:[],looted:[],lore:[]}}
 const cap=()=>40*Math.pow(2,S.wh-1);
@@ -619,15 +643,19 @@ function simulate(dt,track){
  if(S.en<maxEn()){S.enT+=dt;const ep=enPeriod();while(S.enT>=ep&&S.en<maxEn()){S.enT-=ep;S.en++}}else S.enT=0;
  if(S.hp<maxHp()){S.hpT+=dt;while(S.hpT>=HP_PERIOD&&S.hp<maxHp()){S.hpT-=HP_PERIOD;S.hp++}}else S.hpT=0;
  for(const b in S.coll){const lv=S.coll[b];if(!lv||!S.bossWon.includes(b))continue;BIOMES[b].raw.forEach(k=>{const m=add(k,COLL_RATE*lv*dt);if(track)FLOW[k]=(FLOW[k]||0)+m})}
- autoSim(dt,track);
 }
-function simulateLong(sec){let f=Math.min(sec,90);while(f>0){const d=Math.min(.1,f);fSim(d);f-=d}let t=sec;while(t>0){const d=Math.min(1,t);simulate(d,false);t-=d}}
+/* absence : 20 min simulées pas à pas, puis le reste extrapolé au rythme mesuré sur les 10 dernières minutes */
+function simulateLong(sec){const exact=Math.min(sec,1200);let snap=null;
+ for(let t=0;t<exact;t+=1){if(t===Math.max(0,exact-600))snap={...S.res};simulate(1,false);for(let q=0;q<4;q++)fSim(.25)}
+ const rest=sec-exact;if(rest<=0||!snap)return;const span=Math.min(600,exact);
+ RK.forEach(k=>{const r=(have(k)-(snap[k]||0))/span;if(Math.abs(r)<1e-6)return;S.res[k]=Math.max(0,Math.min(Math.max(cap(),have(k)),have(k)+r*rest))});
+ S.en=Math.min(maxEn(),S.en+Math.floor(rest/enPeriod()));S.hp=Math.min(maxHp(),S.hp+Math.floor(rest/HP_PERIOD))}
 
 /* ---------- Paquet ---------- */
 function cardFor(id){const bw=S.bossWon.includes(D[id].b);if(D[id].t==='boss'&&bw)return D[id].after;return id}
 function newTour(msg){S.day++;S.turn++;const B=BIOMES[S.biome];S.cards={};S.uid=0;
  const ids=B.deck.filter(id=>!(D[id].t==='path'&&S.paid.includes(id))&&!(D[id].t==='cache'&&(S.looted||[]).includes(id))&&!(D[id].t==='helmet'&&(S.manager||!S.bossWon.includes('foret')))).map(cardFor);
- S.queue=shuffle(ids).map(id=>{const u='c'+(S.uid++);S.cards[u]={d:id,lv:0};return u})}
+ S.queue=(D['hub_'+S.biome]?['hub_'+S.biome]:[]).concat(shuffle(ids)).map(id=>{const u='c'+(S.uid++);S.cards[u]={d:id,lv:0};return u})}
 function advance(){S.queue.shift();S.turn++;if(!S.queue.length)newTour()}
 const curU=()=>S.queue[0],curD=()=>S.queue[0]?D[S.cards[S.queue[0]].d]:null;
 function yieldOf(d){const m=1+outLv(d.b);return Object.fromEntries(Object.entries(d.g).map(([k,n])=>[k,n*m]))}
@@ -656,6 +684,7 @@ function act(kind){
  }
  if(kind==='crush'){if(d.t!=='mon'||!forkOn(d.b))return;snapAct();S.kills++;const got=lootMon(d);scene.play('crush',{got});AU.fx('hit',.35);AU.fx('win',.6);
   toast(`Le chariot écrase ${d.n} ! `+Object.entries(got).map(([k,n])=>`+${n} ${RES[k].n.toLowerCase()}`).join(', '));advance();return done(true)}
+ if(kind==='hub'){if(d.t==='hub')openHub(d.b);return}
  if(kind==='loot'){if(d.t==='cache')lootCache(u);if(d.t==='helmet')pickHelmet(u);return}
  if(kind==='open'){
   if(d.t!=='path'||!canPay(d.cost))return;
@@ -673,7 +702,7 @@ function deathPenalty(){const L={items:0,b:null,autos:0,prep:0,fork:false};S.dea
   if(e.t==='mach'){for(const k in e.buf||{})L.items+=e.buf[k];L.items+=(e.out||[]).length;e.buf={};e.out=[];e.busy=0;e.prog=0}
   if(e.t==='auto')e.prog=0}
  const b=S.bossWon.pop();
- if(b){L.b=b;if(S.F)for(const e of Object.values(S.F.ents))if(e.t==='auto'&&PO[e.r].b===b){fDel(e);L.autos++}L.prep=S.coll[b]||0;S.coll[b]=0;S.fork=S.fork||{};L.fork=!!S.fork[b];S.fork[b]=false}
+ if(b){L.b=b;L.prep=S.coll[b]||0;S.coll[b]=0;S.fork=S.fork||{};L.fork=!!S.fork[b];S.fork[b]=false}
  return L}
 function showDeath(L){const B=L.b&&BIOMES[L.b];const li=[];
  li.push(L.items?`Atelier vidé : ${fmt(L.items)} objet${L.items>1?'s':''} perdu${L.items>1?'s':''}`:'Atelier vidé');
@@ -685,7 +714,7 @@ function knockout(){S.hp=0;S.en=Math.min(S.en,1);scene.play('ko',{});AU.fx('ko',
 function eatRation(){if(have('rations')<1||S.en>=maxEn())return;S.res.rations--;S.en=Math.min(maxEn(),S.en+3);AU.fx('eat');toast('+3 endurance');done(false)}
 function drinkPotion(){if(have('potions')<1||S.hp>=maxHp())return;S.res.potions--;S.hp=maxHp();AU.fx('up');toast('Cœurs restaurés');done(false)}
 function switchBiome(b){if(BF||b===S.biome||!S.unlocked.includes(b))return;S.biome=b;newTour();AU.fx('click');done(true,true)}
-function done(anim,struct){renderAdv(anim);updHero();renderGoal();if(TAB==='camp'&&struct)renderCamp();save()}
+function done(anim,struct){renderAdv(anim);updHero();renderGoal();if(TAB==='camp'&&struct)renderCamp();if(!$('hub').hidden)renderHub();save()}
 
 /* ---------- Combat de boss ---------- */
 let BF=null;
@@ -715,7 +744,7 @@ function bfEnd(res){const{u,d}=BF;BF.done=true;BF=null;$('bossF').hidden=true;$(
  const bk=Object.keys(D).find(k=>D[k]===d);const bnw=learnPlans(BOSS_PLANS[bk]||[]);if(!(S.lore||[]).includes('w_'+bk))addLore('w_'+bk,bnw);
  S.cards[u].d=d.after;
  if(d.fin&&!S.win){S.win=true;S.winTime=S.time;RECS.push({time:S.time,tours:S.day,date:Date.now()});RECS.sort((a,b)=>a.time-b.time);saveRecs();setTimeout(showEnd,1000)}
- else toast(`${d.n} vaincu ! Au camp, remplace tes chaînes de ${BIOMES[d.b].n} par des automates.`);
+ else toast(`${d.n} vaincu ! Les distributeurs de ${BIOMES[d.b].n} sont automatiques.`);
  advance();done(true,true)}
 
 /* ---------- Actions du camp ---------- */
@@ -761,51 +790,50 @@ const QUESTS=[
  {t:'Fabrique 2 cordes',h:'Touche le distributeur de fibres : il alimente la corderie.',go:'camp',f:()=>[S.st.made.corde||0,2],r:{bois:10},hl:'fibres'},
  {t:'Récolte 10 bois brut',h:'À l’aventure, touche « Récolter » sur les bosquets.',go:'adv',f:()=>[S.st.harv.bois||0,10],r:{rations:2}},
  {t:'Fouille le campement abandonné',h:'Il se trouve dans le paquet du Bois de l’Aube.',go:'adv',f:()=>[(S.looted||[]).includes('cache_foret')?1:0,1],r:{fibres:6}},
- {t:"Forge l'Épée de bois",h:'Camp → Améliorations → Équipement.',go:'up',f:()=>[S.tier.arme,1],r:{planches:5}},
- {t:"Bats l'Ent millénaire",h:'Il se cache dans le paquet du Bois de l’Aube. Tape vite !',go:'adv',f:()=>[S.bossWon.includes('foret')?1:0,1],r:{bois:15}},
- {t:'Automatise la scierie',h:'Au camp, touche la scierie puis « Remplacer la chaîne ».',go:'camp',f:()=>[autoCount('scierie')?1:0,1],r:{planches:10},hl:'scierie'},
+ {t:"Forge l'Épée de bois",h:'Entre dans l’Entrepôt de l’Aube : c’est la première carte du paquet.',go:'hub',hb:'foret',f:()=>[S.tier.arme,1],r:{planches:5}},
+ {t:"Bats l'Ent millénaire",h:'Il se cache dans le paquet du Bois de l’Aube.',go:'adv',f:()=>[S.bossWon.includes('foret')?1:0,1],r:{bois:15}},
+ {t:'Pose un répartiteur',h:'Il partage un tapis : une partie des planches au stock, l’autre vers une charpenterie.',go:'camp',f:()=>[Object.values(S.F.ents).some(e=>e.t==='split')?1:0,1],r:{corde:4}},
  {t:'Ouvre le Sentier des collines',h:'Il demande 10 planches : tu le croiseras à l’aventure.',go:'adv',f:()=>[S.unlocked.includes('collines')?1:0,1],r:{planches:8}},
  {t:'Ramasse le casque abandonné',h:'Il est apparu dans le Bois de l’Aube, près de la souche de l’Ent.',go:'adv',f:()=>[S.manager?1:0,1],r:{planches:6}},
- {t:'Embauche un préparateur',h:'Camp → Améliorations → Équipe de préparateurs.',go:'up',f:()=>[S.coll.foret?1:0,1],r:{corde:6}},
- {t:'Pose une Taillerie',h:'Camp → Machine → Taillerie, puis un distributeur de pierre derrière.',go:'camp',f:()=>[Object.values(S.F.ents).some(e=>e.r==='taillerie')?1:0,1],r:{pierre:15}}
+ {t:'Embauche un préparateur',h:'Dans l’Entrepôt de l’Aube, rubrique Équipe.',go:'hub',hb:'foret',f:()=>[S.coll.foret?1:0,1],r:{corde:6}},
+ {t:'Pose une Taillerie',h:'Au camp : Machine → Taillerie. Il te faudra un quai libre pour ranger la pierre taillée.',go:'camp',f:()=>[Object.values(S.F.ents).some(e=>e.r==='taillerie')?1:0,1],r:{pierre:15}}
 ];
 const curQ=()=>S&&S.q<QUESTS.length?QUESTS[S.q]:null;
 function claimQ(){const q=curQ();if(!q)return;const[c,m]=q.f();if(c<m)return;const got=[];for(const k in q.r){const n=add(k,q.r[k]);if(n)got.push(`+${Math.round(n)} ${RES[k].n.toLowerCase()}`)}
  S.q++;AU.fx('victory');toast('Étape réussie ! '+got.join(', '));renderGoal();if(TAB==='camp')renderCamp();save()}
-function goQ(){const q=curQ();if(!q)return;AU.fx('click');if(q.go==='adv')setTab('adv');else{CT=q.go==='up'?'up':'grid';TOOL='hand';setTab('camp')}}
+function goQ(){const q=curQ();if(!q)return;AU.fx('click');if(q.go==='adv')setTab('adv');else if(q.go==='hub'){setTab('adv');if(q.hb&&S.biome!==q.hb&&S.unlocked.includes(q.hb))switchBiome(q.hb);openHub(q.hb||S.biome)}else{CT='grid';TOOL='hand';setTab('camp')}}
 function renderGoal(){const q=curQ(),el=$('goal');
  if(!q){el.className='goal free';setH(el,`<div class="q-top"><span class="q-step">Objectif</span></div><p class="q-h">${goalText()}</p>`);$('dotAdv').hidden=$('dotCamp').hidden=true;return}
  const[c0,m]=q.f(),c=Math.min(c0,m),ok=c>=m;el.className='goal'+(ok?' ready':'');
  setH(el,`<div class="q-top"><span class="q-step">${ok?'Étape réussie':`Étape ${S.q+1} / ${QUESTS.length}`}</span><span class="q-rew">Récompense ${resL(q.r)}</span></div>
   <p class="q-t">${q.t}</p>${ok?'':`<p class="q-h">${q.h}</p>`}
-  <div class="q-bar"><div class="bar"><i style="width:${c/m*100}%"></i></div><small>${fmt(c)}/${m}</small>${ok?'<button class="q-go" data-q="claim">Récupérer</button>':((q.go==='adv')!==(TAB==='adv')||(q.go==='up'&&CT!=='up')||(q.go==='camp'&&CT!=='grid'&&TAB==='camp')?'<button class="q-go" data-q="go">Y aller</button>':'')}</div>`);
- $('dotAdv').hidden=ok||q.go!=='adv'||TAB==='adv';$('dotCamp').hidden=ok||q.go==='adv'||TAB==='camp'}
+  <div class="q-bar"><div class="bar"><i style="width:${c/m*100}%"></i></div><small>${fmt(c)}/${m}</small>${ok?'<button class="q-go" data-q="claim">Récupérer</button>':((q.go==='hub'&&$('hub').hidden)||(q.go==='adv'&&TAB!=='adv')||(q.go==='camp'&&(TAB!=='camp'||CT!=='grid'))?'<button class="q-go" data-q="go">Y aller</button>':'')}</div>`);
+ $('dotAdv').hidden=ok||(q.go!=='adv'&&q.go!=='hub')||TAB==='adv';$('dotCamp').hidden=ok||q.go!=='camp'||TAB==='camp'}
 function goalText(){
  if(!S.made)return have('bois')>=3?'Va au camp et touche le distributeur de bois : ta scierie renverra des planches à l’entrepôt.':`Récolte du bois brut à l’aventure (${fmt(have('bois'))}), puis va au camp.`;
- const bwM=Object.values(S.F.ents).find(e=>e.t==='mach'&&S.bossWon.includes(PO[e.r].b));
  const cur=ORDER.filter(b=>S.unlocked.includes(b)).pop();
  const pathId=BIOMES[cur].deck.find(id=>D[id].t==='path');
  const g=[];
  if(pathId&&!S.paid.includes(pathId)){const c=D[pathId].cost;g.push(`Ouvre « ${D[pathId].n} » : ${Object.entries(c).map(([k,n])=>`${fmt(Math.min(have(k),n))}/${n} ${RES[k].n.toLowerCase()}`).join(', ')}`)}
  const nb=ORDER.find(b=>S.unlocked.includes(b)&&!S.bossWon.includes(b));
- if(nb){const bd=D[BIOMES[nb].boss];g.push(`Bats ${bd.n} pour automatiser ${BIOMES[nb].n}`)}
- if(bwM&&g.length<2)g.push(`Au camp, remplace la chaîne « ${PO[bwM.r].n} » par son automate`);
- if(!g.length)return S.win?'Fais grimper ta production : entrepôt, collecteurs, postes de plus haut niveau.':'Terrasse le Gardien des Ruines.';
+ if(nb){const bd=D[BIOMES[nb].boss];g.push(`Bats ${bd.n} : les distributeurs de ${BIOMES[nb].n} deviendront automatiques`)}
+ if(!g.length)return S.win?'Fais grimper ta production : quais, machines de haut niveau, tapis rapides.':'Terrasse le Gardien des Ruines.';
  return g.slice(0,2).join(' · ');
 }
 function cardHTML(){
  const u=curU();if(!u)return'';const d=curD(),B=BIOMES[d.b];
- const kind=d.t==='helmet'?'Objet':d.t==='cache'?'Découverte':d.t==='res'?'Récolte':d.t==='mon'?'Monstre':d.t==='path'?'Passage':d.fin?'Boss final':'Boss du biome';
+ const kind=d.t==='hub'?'Entrepôt':d.t==='helmet'?'Objet':d.t==='cache'?'Découverte':d.t==='res'?'Récolte':d.t==='mon'?'Monstre':d.t==='path'?'Passage':d.fin?'Boss final':'Boss du biome';
  let h=`<div class="c-head"><span class="tag" style="--bc:${B.c}">${B.n}</span><span class="kind">${kind}</span></div><div><h2 class="c-name">${d.n}</h2><p class="c-sub">${d.s}</p></div>`;
  if(d.t==='res'){const y=yieldOf(d);
   h+=`<div class="row">Récolte ${resL(y)}${outLv(d.b)?` <small>outils ×${outLv(d.b)+1}</small>`:''}</div>`;
   h+=`<div class="row"><small>En stock</small> ${Object.keys(y).map(k=>`${ri(k,have(k))}<small>/${fmt(cap())}</small>`).join(' ')}</div>`;
-  if(d.tool&&!S.pioche)h+=`<div class="row warn">Il faut une pioche : fabrique-la au camp, onglet Améliorations</div>`;
+  if(d.tool&&!S.pioche)h+=`<div class="row warn">Il faut une pioche : fabrique-la au Dépôt des Collines</div>`;
  }else if(d.t==='mon'){const f=fightOf(d);
   h+=`<div class="mon"><div class="mon-s"><span>${IC.h} PV <b>${f.hp}</b></span><span>Armure <b>${f.arm}</b></span><span>Chrono <b>${f.dur/1000} s</b></span></div><p>Butin ${resL(d.loot)}</p></div>`;
  }else if(d.t==='boss'){
   h+=`<div class="mon"><div class="mon-s"><span>${IC.h} PV <b>${d.hp}</b></span><span>Armure <b>${d.arm}</b></span><span>Régén. <b>${d.reg}/s</b></span></div>
-  <p>${d.fin?'Boss final':'Débloque les automates'}</p></div>`;
+  <p>${d.fin?'Boss final':'Distributeurs automatiques'}</p></div>`;
+ }else if(d.t==='hub'){const n=hubReady(d.b);h+=`<div class="row">${n?`<b>${n} amélioration${n>1?'s':''} possible${n>1?'s':''}</b>`:'Équipe, outils, forge'}</div><div class="row"><small>Touche le nom du biome pour revenir ici à tout moment.</small></div>`;
  }else if(d.t==='helmet'){h+=`<div class="row">Un casque de chantier jaune, comme celui que tu portais sur les quais.</div><div class="row"><small>Le ramasser ne coûte pas d’endurance.</small></div>`;
  }else if(d.t==='cache'){h+=`<div class="row">Quelqu’un est passé par ici avant toi.</div><div class="row"><small>Fouiller ne coûte pas d’endurance.</small></div>`;
  }else if(d.t==='path'){const N=BIOMES[d.to];
@@ -823,7 +851,8 @@ function renderAdv(anim){
   else if(d.t==='boss'){mk='fight';if(S.hp<1)mh='K.O. · repos';else{md=false;mh='Affronter'}}
   else if(d.t==='path'){mk='open';md=!canPay(d.cost);mh='Ouvrir le passage'}
   else if(d.t==='cache'){mk='loot';md=false;mh='Fouiller'}
-  else if(d.t==='helmet'){mk='loot';md=false;mh='Mettre le casque'}}
+  else if(d.t==='helmet'){mk='loot';md=false;mh='Mettre le casque'}
+  else if(d.t==='hub'){mk='hub';md=false;mh='Entrer'}}
  setH(bm,mh);bm.disabled=md;bm.dataset.k=mk;setH(bp,ph);bp.disabled=!d;
  const nx=S.queue[1];
  setH($('deckInfo'),`Tour ${S.day} · <b>${S.queue.length}</b> carte${S.queue.length>1?'s':''}`+(nx?` · ensuite : <b>${D[S.cards[nx].d].n}</b>`:''));
@@ -842,45 +871,18 @@ function updStrip(){const bio=BIOMES[S.biome].raw,c=BIOMES[S.biome].c,now=Date.n
 
 /* camp */
 function tile(k){return `<div class="rt"><span>${IC[k]}</span><div class="rtm"><div class="rtop"><span>${RES[k].n}</span><span class="rr" data-rate="${k}"></span></div><div class="rv"><b data-v="${k}">${fmt(have(k))}</b><small>/ ${fmt(cap())}</small></div><div class="rbar" data-bb="${k}"><i data-bar="${k}"></i></div></div></div>`}
-function whHTML(){const c=whCost(S.wh);
+function whHTML(){const c=whCost(S.wh),n=S.F.docks||2,dc=DOCKC[n+1],gc=GRIDC[S.F.w];
  const raw=S.known.filter(k=>RES[k].t===0),pro=S.known.filter(k=>RES[k].t===1);
- return `<div class="panel"><div class="whh"><div><h3 class="ph3">Entrepôt · niveau ${S.wh}</h3><p class="hint">${fmt(cap())} places par ressource</p></div><button class="btn sm main" data-act="wh" data-need="${need(c)}">Agrandir → ${fmt(cap()*2)}</button><div class="cost">${costL(c)}</div></div></div>
- <h4 class="grp">Matières brutes</h4><div class="rgrid">${raw.map(tile).join('')}</div>
- ${pro.length?`<h4 class="grp">Produits transformés</h4><div class="rgrid">${pro.map(tile).join('')}</div>`:'<p class="hint">Construis un poste dans l’onglet Production pour transformer tes matières.</p>'}
- <p class="hint">Les chiffres verts et rouges indiquent ce que tes postes automatiques et tes collecteurs produisent ou consomment chaque seconde.</p>`}
+ return `<div class="panel">
+ <div class="urow"><div><b>Stock</b> <small>${fmt(cap())} par ressource</small></div><button class="btn sm" data-act="wh" data-need="${need(c)}">→ ${fmt(cap()*2)}</button><div class="cost">${costL(c)}</div></div>
+ <div class="urow"><div><b>Quais</b> <small>${n} / ${DOCK_MAX}</small></div>${n<DOCK_MAX?`<button class="btn sm" data-fx="dock" data-need="${need(dc)}">+1 quai</button><div class="cost">${costL(dc)}</div>`:'<span class="hint">Max</span>'}</div>
+ ${gc&&S.F.w<GRID_MAX?`<div class="urow"><div><b>Terrain</b> <small>${S.F.w}×${S.F.h}</small></div><button class="btn sm" data-fx="expand" data-need="${need(gc)}">→ ${S.F.w+1}×${S.F.h+1}</button><div class="cost">${costL(gc)}</div></div>`:''}</div>
+ <h4 class="grp">Matières premières</h4><div class="rgrid">${raw.map(tile).join('')}</div>
+ ${pro.length?`<h4 class="grp">Produits transformés</h4><div class="rgrid">${pro.map(tile).join('')}</div>`:''}`}
 const recipe=p=>`${Object.entries(p.in).map(([k,n])=>ri(k,n)).join(' ')} <span class="arr">→</span> ${Object.entries(p.out).map(([k,n])=>ri(k,n)).join(' ')}`;
-function postHTML(p){const st=S.posts[p.id],auto=isAuto(p);
- if(!st)return `<div class="post lock"><div class="p-h"><b>${p.n}</b><span class="pst">À construire</span></div><div class="recipe">${recipe(p)}</div><div class="whh"><div class="cost">${costL(p.cost)}</div><button class="btn sm main" data-build="${p.id}" data-need="${need(p.cost)}">Construire</button></div></div>`;
- const uc=postUp(p,st.lv);
- return `<div class="post" data-post="${p.id}"><div class="p-h"><b>${p.n} <small>niv. ${st.lv}</small></b><span class="pst" data-st="${p.id}"></span></div>
-  <div class="recipe">${recipe(p)} ${auto?`<small class="hint">· ${fmtR(st.lv/p.t)} lot/s</small>`:''}</div>
-  ${auto?`<div class="pbar" data-pbw="${p.id}"><i data-pb="${p.id}"></i></div>`:''}
-  <div class="pact${auto?' three':''}"><button class="tapb" data-tap="${p.id}">${p.v} ×${st.lv}</button>${auto?`<button class="btn sm ghost" data-tog="${p.id}">${st.on?'Pause':'Relancer'}</button>`:''}
-  <button class="upb" data-pup="${p.id}" data-need="${need(uc)}"><span>Niveau ${st.lv+1}</span><span class="cost">${costL(uc)}</span></button></div></div>`}
-function prodHTML(){return S.unlocked.map(b=>{const B=BIOMES[b],auto=S.bossWon.includes(b),ps=POSTES.filter(p=>p.b===b);
- const lv=S.coll[b]||0,cc=collCost(b,lv);
- return `<section class="chain"><div class="ch-h"><i style="--c:${B.c}"></i><h3>${B.n}</h3><span class="chip ${auto?'auto':'man'}">${auto?'Automatique':'Manuel'}</span></div>
- ${auto?'':`<p class="hint">Tape sur un poste pour traiter un lot. Bats ${D[B.boss].n} pour que ces postes tournent seuls.</p>`}
- ${ps.map(postHTML).join('')}
- ${auto?`<div class="urow"><div><b>${COLL[b].n}</b> <small>niv. ${lv}</small><p>${B.raw.map(k=>IC[k]).join(' ')} ${lv?`${fmtR(COLL_RATE*lv)}/s chacun`:'Récolte les matières brutes du biome en continu'} → ${fmtR(COLL_RATE*(lv+1))}/s</p></div><button class="btn sm" data-coll="${b}" data-need="${need(cc)}">${lv?'Améliorer':'Recruter'}</button><div class="cost">${costL(cc)}</div></div>`:''}
- </section>`}).join('')+(S.unlocked.length<ORDER.length?'<p class="hint">D’autres chaînes apparaîtront avec les prochains biomes.</p>':'')}
-function upHTML(){
- const heroRows=Object.entries(HERO).filter(([k,h])=>!h.need||S.unlocked.includes(h.need)).map(([k,h])=>{const lv=S.hero[k],mx=heroMax(k)!=null&&lv>=heroMax(k),c=heroCost(k,lv);
-  return `<div class="urow"><div><b>${h.n}</b> <small>niv. ${lv}</small><p>${h.fx(lv)}</p></div>${mx?`<span class="hint">${k==='train'?(S.tier.arme?'Forge une meilleure arme':'Forge une arme d’abord'):'Max'}</span>`:`<button class="btn sm" data-hero="${k}" data-need="${need(c)}">Améliorer</button><div class="cost">${costL(c)}</div>`}</div>`}).join('');
- const outRows=S.unlocked.map(b=>{const lv=outLv(b),c=outCost(b,lv);return `<div class="urow"><div><b>${OUT[b].n}</b> <small>niv. ${lv}</small><p>${BIOMES[b].n} : récoltes ×${lv+1} → ×${lv+2}</p></div><button class="btn sm" data-out="${b}" data-need="${need(c)}">Améliorer</button><div class="cost">${costL(c)}</div></div>`}).join('');
- const pio=S.unlocked.includes('collines')?`<div class="urow"><div><b>Pioche</b><p>Nécessaire pour le minerai, le charbon des veines et le cristal.</p></div>${S.pioche?'<span class="hint">Fabriquée</span>':!hasPlan('pioche')?'<span class="hint">Plan à découvrir</span>':`<button class="btn sm" data-act="pioche" data-need="${need(PIOCHE)}">Fabriquer</button><div class="cost">${costL(PIOCHE)}</div>`}</div>`:'';
- const gear=SLOTS.map(s=>{const cur=GEAR[s].l[S.tier[s]],nx=GEAR[s].l[S.tier[s]+1];const plan=nx&&hasPlan(s+':'+(S.tier[s]+1));const known=plan&&Object.keys(nx.cost).every(k=>S.known.includes(k));
-  return `<div class="urow"><div><b>${GEAR[s].n} : ${cur.n}</b><p>${nx?(!plan?'Plan à découvrir au fil de l’aventure':known?`Suivant : ${nx.n} · ${gearFx(nx)}`:`Suivant : ${nx.n} · matériaux encore inconnus`):'Meilleur équipement atteint'}</p></div>${nx&&known?`<button class="btn sm" data-gear="${s}" data-need="${need(nx.cost)}">Forger</button><div class="cost">${costL(nx.cost)}</div>`:''}</div>`}).join('');
- const whc=whCost(S.wh),gc=GRIDC[S.F.w];
- const camp=`<div class="urow"><div><b>Entrepôt</b> <small>niv. ${S.wh}</small><p>${fmt(cap())} → ${fmt(cap()*2)} places par ressource</p></div><button class="btn sm" data-act="wh" data-need="${need(whc)}">Agrandir</button><div class="cost">${costL(whc)}</div></div>`
-  +(gc&&S.F.w<GRID_MAX?`<div class="urow"><div><b>Terrain du camp</b> <small>${S.F.w} × ${S.F.h}</small><p>→ ${S.F.w+1} × ${S.F.h+1} cases pour tes chaînes</p></div><button class="btn sm" data-fx="expand" data-need="${need(gc)}">Agrandir</button><div class="cost">${costL(gc)}</div></div>`:'')
-;
- const team=!S.manager?`<div class="urow lockrow"><div><b>Équipe de préparateurs</b><p>${S.bossWon.includes('foret')?'Un objet t’attend dans le Bois de l’Aube. Il te permettra de diriger une équipe.':'Il te faudra de quoi te faire reconnaître comme chef d’équipe.'}</p></div></div>`
-  :(S.bossWon.length?S.bossWon.map(b=>{const lv=S.coll[b]||0,cc=collCost(b,lv),mx=lv>=PREP_MAX;return `<div class="urow"><div><b>Préparateurs · ${BIOMES[b].n}</b> <small>${lv} en poste</small><p>${BIOMES[b].raw.map(k=>IC[k]).join(' ')} ${lv?`${fmtR(COLL_RATE*lv)}/s de chaque matière`:'Font du picking pour toi en continu'}${mx?'':` → ${fmtR(COLL_RATE*(lv+1))}/s`}. Tu les croiseras sur le chemin.</p></div>${mx?'<span class="hint">Équipe complète</span>':`<button class="btn sm" data-coll="${b}" data-need="${need(cc)}">Embaucher</button><div class="cost">${costL(cc)}</div>`}</div>`+(()=>{const fk=(S.fork||{})[b],fc=FORK_COST[b];return `<div class="urow${lv?'':' lockrow'}"><div><b>Chariot élévateur · ${BIOMES[b].n}</b><p>${fk?'En service : il écrase les monstres de ce biome à ta place. Les boss restent à toi.':lv?'Un préparateur prend le volant et écrase les monstres du biome à ta place.':'Embauche d’abord un préparateur ici pour le conduire.'}</p></div>${fk?'<span class="hint">En service</span>':lv?`<button class="btn sm" data-fork="${b}" data-need="${need(fc)}">Acheter</button><div class="cost">${costL(fc)}</div>`:''}</div>`})()}).join(''):'');
- return `<h4 class="grp">Camp</h4>${camp}<h4 class="grp">Équipe de préparateurs${S.manager?' · tu es manager':''}</h4>${team}<h4 class="grp">Héros · attaque ${atk()} · défense ${dfn()}</h4>${heroRows}<h4 class="grp">Outils de récolte</h4>${pio}${outRows}<h4 class="grp">Équipement</h4>${gear}`}
 const gearFx=p=>[p.atk?`${p.atk} attaque`:'',p.def?`+${p.def} défense`:'',p.hp?`+${p.hp} cœur${p.hp>1?'s':''}`:'',p.end?`+${p.end} endurance`:''].filter(Boolean).join(', ');
 function renderCamp(){if(TAB!=='camp')return;document.querySelectorAll('.subtabs button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.ct===CT)));
- const body=$('campBody');body.innerHTML=CT==='wh'?whHTML():CT==='grid'?gridHTML():upHTML();body._h=null;if(CT==='grid'){bindCanvas();renderFInfo(true)}liveCamp()}
+ if(CT!=='wh')CT='grid';const body=$('campBody');body.innerHTML=CT==='wh'?whHTML():gridHTML();body._h=null;if(CT==='grid'){bindCanvas();renderFInfo(true)}liveCamp()}
 function liveCamp(){if(TAB!=='camp'||CT==='grid')return;const body=$('campBody');
  body.querySelectorAll('[data-v]').forEach(el=>{const t=fmt(have(el.dataset.v));if(el.textContent!==t)el.textContent=t});
  body.querySelectorAll('[data-bar]').forEach(el=>{const k=el.dataset.bar,f=have(k)/cap();el.style.width=Math.min(100,f*100)+'%';el.parentNode.classList.toggle('full',f>=1)});
@@ -912,6 +914,7 @@ function save(){if(!S||pristine())return;S.last=Date.now();try{localStorage.setI
 function normalize(){const F=fresh();const oldSave=S.st===undefined,noPlans=S.recipes===undefined;for(const k in F)if(S[k]===undefined)S[k]=JSON.parse(JSON.stringify(F[k]));RK.forEach(k=>{if(S.res[k]==null)S.res[k]=0});SLOTS.forEach(s=>{if(S.tier[s]==null)S.tier[s]=0});syncEq();migrateF();fIndex();if(!S.queue.length)newTour();
  if(noPlans){S.recipes=undefined;migrateLore()}
  if(!S.fork)S.fork={};
+ if(S.migAuto){const n=S.migAuto;delete S.migAuto;setTimeout(()=>{$('awayIn').innerHTML=`<div class="sheet-top"><h2>Nouvel atelier</h2><button class="x" id="bAwayX" aria-label="Fermer">×</button></div><p>Les automates d'une case n'existent plus : ${n>1?`tes ${n} automates ont été démontés et remboursés`:'ton automate a été démonté et remboursé'}. Désormais, battre un boss rend ses distributeurs automatiques, et l'entrepôt reçoit les produits par des quais. Les améliorations se font dans l'Entrepôt de chaque biome, en première carte du paquet.</p><button class="btn main" id="bAwayOk">Compris</button>`;$('away').hidden=false;const c=()=>$('away').hidden=true;$('bAwayX').onclick=c;$('bAwayOk').onclick=c},600)}
  if(S.manager===undefined){S.manager=Object.values(S.coll||{}).some(v=>v>0);if(S.manager&&!(S.lore||[]).includes('helmet'))S.lore.push('helmet')}
  if(oldSave){S.st={pour:9,made:{planches:99,corde:99},harv:{bois:99}};while(S.q<QUESTS.length&&(()=>{const[c,m]=QUESTS[S.q].f();return c>=m})())S.q++}}
 function load(n){const j=slotData(n);if(!j)return false;S=j.S;normalize();const away=Math.min(8*3600,Math.max(0,(Date.now()-(S.last||Date.now()))/1000));if(away>30)offline(away);return true}
@@ -986,7 +989,7 @@ function addLore(ids,plans){ids=[].concat(ids);S.lore=S.lore||[];ids.forEach(id=
 function nextStory(){const it=STORYQ.shift();if(!it){$('story').hidden=true;pickSong();return}let i=0;
  const draw=()=>{const id=it.ids[i],L=LORE[id],last=i===it.ids.length-1;
   $('storyIn').innerHTML=`${L.img?'<canvas class="st-img" id="stCv"></canvas>':''}<p class="st-tag">${L.tag}</p><h2>${L.t}</h2><p class="st-x">${L.x}</p>
-  ${last&&it.plans.length?`<div class="st-plans"><b>Plans découverts</b>${it.plans.map(p=>`<span>${PLAN_NAME(p)}</span>`).join('')}<small>Tu peux maintenant les fabriquer au camp, onglet Améliorations.</small></div>`:''}
+  ${last&&it.plans.length?`<div class="st-plans"><b>Plans découverts</b>${it.plans.map(p=>`<span>${PLAN_NAME(p)}</span>`).join('')}<small>Forge-les dans l’Entrepôt du biome où tu les as trouvés.</small></div>`:''}
   <div class="st-nav"><span>${it.ids.length>1?`${i+1} / ${it.ids.length}`:''}</span><button class="btn main" id="stNext">${last?'Continuer':'Suivant'}</button></div>`;
   if(L.img)illus($('stCv'),L.img);
   $('stNext').onclick=()=>{AU.fx('click');if(last)nextStory();else{i++;draw()}}};
@@ -1013,6 +1016,42 @@ function pickHelmet(u){if(S.manager)return;S.manager=true;S.acts++;AU.fx('victor
 
 LORE.fork={tag:'Équipe de préparateurs',t:'Le cariste',x:"Tu dessines le plan au dos d'une page du carnet : un mât, deux fourches, un contrepoids. Tes préparateurs se regardent, puis se mettent au travail. Le lendemain, un chariot élévateur fume au milieu du camp. Le premier monstre qui croise sa route ne comprend pas ce qui lui arrive."};
 LORE_ORDER.splice(LORE_ORDER.indexOf('helmet')+1,0,'fork');
+
+/* ---------- Entrepôts de biome : les améliorations se font sur place ---------- */
+const HUBN={foret:"Entrepôt de l'Aube",collines:'Dépôt des Collines',mine:'Magasin de la Mine',marais:'Hangar du Marais',grotte:'Réserve de cristal',ruines:'Grand entrepôt des Ruines'};
+const HUBS={foret:'Des racks de fortune entre les pins',collines:'Un abri de pierre sèche, bien rangé',mine:'Un magasin de pièces sous la roche',marais:'Un hangar sur pilotis',grotte:'Des étagères taillées dans le cristal',ruines:'Des quais immenses sous les voûtes'};
+ORDER.forEach(b=>{D['hub_'+b]={t:'hub',b,n:HUBN[b],s:HUBS[b]}});
+const PLANB={};Object.values(CACHES).forEach(c=>c.plans.forEach(p=>PLANB[p]=c.b));Object.entries(BOSS_PLANS).forEach(([k,ps])=>{const b=ORDER.find(x=>BIOMES[x].boss===k);ps.forEach(p=>PLANB[p]=b)});
+const HERO_HUB={train:'foret',endu:'foret',recup:'collines',vigueur:'collines'};
+let HUBB=null;
+function hubRows(b){const B=BIOMES[b],R=[];const row=(t,sub,btn,cost,ready)=>R.push({h:`<div class="urow"><div><b>${t}</b>${sub?`<p>${sub}</p>`:''}</div>${btn||''}${cost?`<div class="cost">${costL(cost)}</div>`:''}</div>`,ready:!!ready});
+ const sec=[];
+ // équipe
+ const team=[];const push=(arr,t,sub,btn,cost,ready)=>arr.push({h:`<div class="urow"><div><b>${t}</b>${sub?`<p>${sub}</p>`:''}</div>${btn||''}${cost?`<div class="cost">${costL(cost)}</div>`:''}</div>`,ready:!!ready&&!!cost&&canPay(cost)});
+ if(!S.manager)push(team,'Préparateurs','Il te faut d’abord de quoi diriger une équipe.');
+ else if(!S.bossWon.includes(b))push(team,'Préparateurs',`Bats ${D[B.boss].n} pour recruter ici.`);
+ else{const lv=S.coll[b]||0,cc=collCost(b,lv),mx=lv>=PREP_MAX;push(team,`Préparateurs <small>${lv}/${PREP_MAX}</small>`,`${B.raw.map(k=>IC[k]).join(' ')} ${fmtR(COLL_RATE*lv)}/s → ${fmtR(COLL_RATE*(lv+1))}/s`,mx?'<span class="hint">Complet</span>':`<button class="btn sm" data-coll="${b}" data-need="${need(cc)}">Embaucher</button>`,mx?null:cc,!mx);
+  const fk=(S.fork||{})[b],fc=FORK_COST[b];push(team,'Chariot élévateur',fk?'Écrase les monstres du biome.':lv?'Écrase les monstres du biome à ta place.':'Il faut un préparateur pour le conduire.',fk?'<span class="hint">En service</span>':lv?`<button class="btn sm" data-fork="${b}" data-need="${need(fc)}">Acheter</button>`:'',fk||!lv?null:fc,!fk&&lv)}
+ sec.push(['Équipe',team]);
+ // outils
+ const tools=[];const lv=outLv(b),oc=outCost(b,lv);push(tools,`${OUT[b].n} <small>×${lv+1}</small>`,`Récoltes ×${lv+1} → ×${lv+2}`,`<button class="btn sm" data-out="${b}" data-need="${need(oc)}">Améliorer</button>`,oc,1);
+ if(b==='collines')push(tools,'Pioche',S.pioche?'Fabriquée':!hasPlan('pioche')?'Plan à trouver dans ce biome':'Pour le minerai, les veines et le cristal',S.pioche||!hasPlan('pioche')?'':`<button class="btn sm" data-act="pioche" data-need="${need(PIOCHE)}">Fabriquer</button>`,S.pioche||!hasPlan('pioche')?null:PIOCHE,1);
+ sec.push(['Outils',tools]);
+ // forge
+ const forge=[];SLOTS.forEach(s=>{const i=S.tier[s]+1,nx=GEAR[s].l[i];if(!nx||PLANB[s+':'+i]!==b)return;const plan=hasPlan(s+':'+i),known=plan&&Object.keys(nx.cost).every(k=>S.known.includes(k));
+  push(forge,nx.n,!plan?(Object.values(BOSS_PLANS).some(ps=>ps.includes(s+':'+i))?`Plan : bats ${D[B.boss].n}`:'Plan à trouver dans ce biome'):known?gearFx(nx):'Matériaux encore inconnus',plan&&known?`<button class="btn sm" data-gear="${s}" data-need="${need(nx.cost)}">Forger</button>`:'',plan&&known?nx.cost:null,1)});
+ if(forge.length)sec.push(['Forge',forge]);
+ // héros
+ const hero=[];Object.entries(HERO).forEach(([k,h])=>{if(HERO_HUB[k]!==b)return;const l=S.hero[k],mx=heroMax(k)!=null&&l>=heroMax(k),c=heroCost(k,l);
+  push(hero,`${h.n} <small>niv. ${l}</small>`,h.fx(l),mx?`<span class="hint">${k==='train'?'Forge une meilleure arme':'Max'}</span>`:`<button class="btn sm" data-hero="${k}" data-need="${need(c)}">Améliorer</button>`,mx?null:c,!mx)});
+ if(hero.length)sec.push(['Héros',hero]);
+ return sec}
+function hubReady(b){if(!S)return 0;return hubRows(b).reduce((n,[,rs])=>n+rs.filter(r=>r.ready).length,0)}
+function hubHTML(b){const B=BIOMES[b];return `<div class="sheet-top"><h2>${HUBN[b]}</h2><button class="x" id="hubX" aria-label="Fermer">×</button></div><canvas class="st-img hub-img" id="hubCv"></canvas>
+ ${hubRows(b).map(([t,rs])=>`<h4 class="grp">${t}</h4>${rs.map(r=>r.h).join('')}`).join('')}`}
+function renderHub(){if(!HUBB)return;const el=$('hubIn'),h=hubHTML(HUBB);if(el._h!==h){el.innerHTML=h;el._h=h;illus($('hubCv'),'hub:'+HUBB)}el.querySelectorAll('[data-need]').forEach(x=>{x.disabled=!canNeed(x.dataset.need)})}
+function openHub(b){HUBB=b;$('hubIn')._h=null;renderHub();$('hub').hidden=false;AU.fx('click')}
+function closeHub(){$('hub').hidden=true;HUBB=null;renderAdv(false)}
 
 
 /* ---------- Illustrations pixel du récit ---------- */
@@ -1068,6 +1107,14 @@ function illus(cv,kind){const c=cv.getContext('2d'),W=320,H=180;const d=Math.min
   R(140,66,30,30,'#4f8a45');R(146,72,18,14,'rgba(255,255,255,.2)');R(240,68,26,26,'#c9884a');
   for(let x=86;x<238;x+=34){c.fillStyle='rgba(0,0,0,.35)';c.beginPath();c.arc(x+10,81,5,0,7);c.fill();R(x+6,79,8,4,'#a8703a')}
   paintGuy(c,190,104,4,{clip:true})}
+ if(kind.startsWith('hub:')){const b=kind.slice(4),col=BIOMES[b]?BIOMES[b].c:'#4f8a45';
+  R(0,0,W,H,'#2a2f38');R(0,0,W,22,col);for(let x=0;x<W;x+=16)R(x,18,8,4,'rgba(0,0,0,.25)');
+  for(let x=0;x<W;x+=40)R(x,22,2,108,'rgba(0,0,0,.18)');R(0,130,W,50,'#6b6358');for(let x=0;x<W;x+=24)R(x,130,12,3,'#f2cf4a');
+  const rack=(x)=>{R(x,34,4,96,'#d9772e');R(x+86,34,4,96,'#d9772e');[52,82,112].forEach(y=>{R(x,y,90,4,'#3d6fa0');box(x+8,y-18,24,18);box(x+36,y-14,20,14);if(y!==82)box(x+60,y-18,24,18)})};
+  rack(14);rack(214);
+  pallet(120,150,56);box(124,126,22,24);box(148,130,24,20);box(132,110,26,16);
+  if(S&&S.fork&&S.fork[b]){R(250,128,34,22,'#f2cf4a');R(254,112,16,16,'#2e3440');R(284,100,4,50,'#555');R(288,146,18,3,'#888');c.fillStyle='#1d1812';c.beginPath();c.arc(258,152,5,0,7);c.arc(280,152,5,0,7);c.fill()}
+  paintGuy(c,86,102,3,{hat:S&&S.manager})}
 }
 
 /* ---------- Logo : colis, palette, casque de chantier ---------- */
@@ -1112,91 +1159,105 @@ function paintWorker(c,ox,oy,s,i){const P=(x,y,w,h,col)=>{c.fillStyle=col;c.fill
  P(7,8,2,2,'#f08a24');P(8,8,3,3,'#c28d52');P(9,8,1,3,'#e0bd82')}
 
 
-/* ---------- Atelier : l'usine du camp ---------- */
-const SHORT={charpente:'Charpente',corderie:'Corderie',lapidaire:'Lapidaire',affinerie:'Affinerie',joaillerie:'Bijoux',four:'Four',alambic:'Alambic',sechoir:'Séchoir',verrerie:'Verrerie',acierie:'Aciérie',fonderie:'Fonderie',taillerie:'Taillerie',tannerie:'Tannerie',cuisine:'Cuisine',scierie:'Scierie'};
+/* ---------- Atelier : l'usine du camp (chaînes physiques, quais, grandes machines, répartiteurs) ---------- */
+const SHORT={charpente:'Charpente',corderie:'Corderie',lapidaire:'Lapidaire',affinerie:'Affinerie',joaillerie:'Joaillerie',four:'Four',alambic:'Alambic',sechoir:'Séchoir',verrerie:'Verrerie',acierie:'Aciérie',fonderie:'Fonderie',taillerie:'Taillerie',tannerie:'Tannerie',cuisine:'Cuisine',scierie:'Scierie'};
 const DX=[1,0,-1,0],DY=[0,1,0,-1],ARW=['→','↓','←','↑'];
-const AUTO_RES=0,BELT_SPEED=3,DIST_RATE=.25,DIST_LOAD=10,DIST_MAX=30;
-const COST_BELT={bois:1},COST_DIST={bois:3};
-const machT=p=>Math.max(.8,p.t*.35);
-const autoCount=id=>Object.values(S.F.ents).filter(e=>e.t==='auto'&&e.r===id).length;
-const autoCost=(p,n)=>scale(scale(p.cost,1,2),n||0,1.5);
-const autoName=p=>`${p.n} automatique`;
+const BELT_SPEED=3,DIST_RATE=.25,DIST_LOAD=10,DIST_MAX=30,AUTO_BUF=4,MACH_MAX=5;
+const COST_BELT={bois:1},COST_FAST={poutres:1},COST_DIST={bois:3},COST_SPLIT={planches:3,corde:1};
+const BIG={acierie:1,alambic:1,verrerie:1,joaillerie:1};
+const machT=(p,lv)=>Math.max(.8,p.t*.35)/(lv||1);
+const machUp=(p,lv)=>scale(p.up,lv-1,1.7);
 const GRIDC={8:{planches:15},9:{planches:30,taillee:10},10:{poutres:15,taillee:25},11:{lingots:25,poutres:25},12:{briques:40,acier:10},13:{verre:40,acier:25}};
 const GRID_MAX=14;
+const DOCK_MAX=6,DOCKC=[null,null,null,{planches:20,corde:6},{taillee:20,poutres:8},{lingots:20,briques:12},{acier:15,verre:12}];
+const fastOK=()=>S.bossWon.includes('collines');
+/* biome d'origine d'une ressource : ses distributeurs deviennent automatiques quand ce boss tombe */
+const SRC={};ORDER.forEach(b=>BIOMES[b].raw.forEach(k=>{if(!SRC[k])SRC[k]=b}));POSTES.forEach(p=>Object.keys(p.out).forEach(k=>{if(!SRC[k])SRC[k]=p.b}));
+const autoK=k=>S.bossWon.includes(SRC[k]);
 let CELL={};
-function fIndex(){CELL={};for(const id in S.F.ents){const e=S.F.ents[id];const w=e.t==='wh'?2:1;for(let a=0;a<w;a++)for(let b=0;b<w;b++)CELL[(e.x+a)+','+(e.y+b)]=e}}
+const szOf=e=>e.t==='wh'||e.sz===2?2:1;
+let EL={dist:[],split:[],mach:[],belt:[]};
+function fIndex(){CELL={};EL={dist:[],split:[],mach:[],belt:[]};for(const id in S.F.ents){const e=S.F.ents[id],w=szOf(e);if(EL[e.t])EL[e.t].push(e);for(let a=0;a<w;a++)for(let b=0;b<w;b++)CELL[(e.x+a)+','+(e.y+b)]=e}}
 const fAt=(x,y)=>CELL[x+','+y]||null;
 function fAdd(e){e.id='e'+(S.F.nid++);S.F.ents[e.id]=e;fIndex();return e}
 function fDel(e){delete S.F.ents[e.id];fIndex()}
-const frontOf=e=>e.t==='wh'||e.t==='auto'?null:fAt(e.x+DX[e.d],e.y+DY[e.d]);
-const faces=(e,src)=>!!src&&e.t!=='wh'&&e.t!=='auto'&&frontOf(e)===src;
-function starterF(){S.F={w:8,h:8,nid:1,ents:{}};CELL={};
+/* case de sortie : devant l'élément (pour une grande machine, la case avant-gauche vue de l'élément) */
+function outCell(e){if(e.t==='wh')return null;if(e.sz===2){const d=e.d;return d===0?[e.x+2,e.y]:d===1?[e.x,e.y+2]:d===2?[e.x-1,e.y]:[e.x,e.y-1]}return[e.x+DX[e.d],e.y+DY[e.d]]}
+const frontOf=e=>{const c=outCell(e);return c?fAt(c[0],c[1]):null};
+const fromCell=e=>{const c=outCell(e);return c?[c[0]-DX[e.d],c[1]-DY[e.d]]:[e.x,e.y]};
+const faces=(e,src)=>!!src&&e.t!=='wh'&&frontOf(e)===src;
+function dockCells(w){w=w||Object.values(S.F.ents).find(e=>e.t==='wh');if(!w)return[];const x=w.x,y=w.y;
+ return[[x+2,y,2],[x+2,y+1,2],[x+1,y-1,1],[x+1,y+2,3],[x,y-1,1],[x,y+2,3]]}
+const activeDocks=()=>dockCells().slice(0,S.F.docks||2);
+const isDock=(x,y)=>activeDocks().some(c=>c[0]===x&&c[1]===y);
+function starterF(){S.F={w:8,h:8,nid:1,ents:{},docks:2,v:3};CELL={};
  fAdd({t:'wh',x:0,y:3});fAdd({t:'dist',x:5,y:3,d:2,k:'bois',pend:0});fAdd({t:'belt',x:4,y:3,d:2,item:null});
- fAdd({t:'mach',x:3,y:3,d:2,r:'scierie',buf:{},out:[]});fAdd({t:'belt',x:2,y:3,d:2,item:null});
- fAdd({t:'dist',x:5,y:4,d:2,k:'fibres',pend:0});fAdd({t:'belt',x:4,y:4,d:2,item:null});fAdd({t:'mach',x:3,y:4,d:2,r:'corderie',buf:{},out:[]});fAdd({t:'belt',x:2,y:4,d:2,item:null})}
+ fAdd({t:'mach',x:3,y:3,d:2,r:'scierie',buf:{},out:[],lv:1});fAdd({t:'belt',x:2,y:3,d:2,item:null});
+ fAdd({t:'dist',x:5,y:4,d:2,k:'fibres',pend:0});fAdd({t:'belt',x:4,y:4,d:2,item:null});fAdd({t:'mach',x:3,y:4,d:2,r:'corderie',buf:{},out:[],lv:1});fAdd({t:'belt',x:2,y:4,d:2,item:null})}
 function accept(t,k,src){if(!t)return false;
  if(t.t==='belt'){if(t.item||faces(t,src))return false;t.item={k,p:0};return true}
+ if(t.t==='split'){if(t.item||!src)return false;const bx=t.x-DX[t.d],by=t.y-DY[t.d];if(fAt(bx,by)!==src)return false;t.item={k};return true}
  if(t.t==='mach'){const p=PO[t.r];if(!p.in[k]||faces(t,src))return false;t.buf=t.buf||{};if((t.buf[k]||0)>=99)return false;t.buf[k]=(t.buf[k]||0)+1;return true}
- if(t.t==='wh'){if(have(k)+1>cap()+1e-9)return false;learn(k);S.res[k]=have(k)+1;FLOW[k]=(FLOW[k]||0)+1;if(RES[k].t===1)S.made=1;if(S.st)S.st.made[k]=(S.st.made[k]||0)+1;return true}
+ if(t.t==='wh'){if(!src)return false;const c=fromCell(src);if(!isDock(c[0],c[1])){src.noDock=1;return false}src.noDock=0;
+  if(have(k)+1>cap()+1e-9)return false;learn(k);S.res[k]=have(k)+1;FLOW[k]=(FLOW[k]||0)+1;if(RES[k].t===1)S.made=1;if(S.st)S.st.made[k]=(S.st.made[k]||0)+1;return true}
  return false}
 function fedFull(e){let c=frontOf(e),n=0;const seen=new Set();while(c&&c.t==='belt'&&!seen.has(c.id)&&n<80){seen.add(c.id);n++;c=frontOf(c)}
  if(!c||c.t!=='mach'||!PO[c.r].in[e.k])return false;return (c.buf&&c.buf[e.k]||0)+n>=99-PO[c.r].in[e.k]}
-function fSim(dt){const E=Object.values(S.F.ents);
- for(const e of E.filter(e=>e.t==='dist').sort((a,b)=>(b.wt||0)-(a.wt||0))){if(e.pend>0){e.tm=(e.tm||0)+dt;if(e.tm>=DIST_RATE){if(!fedFull(e)&&accept(frontOf(e),e.k,e)){e.pend--;e.tm=0;e.wt=0;e.st='run'}else{e.tm=DIST_RATE;e.wt=(e.wt||0)+dt;e.st='blk'}}}else{e.st='idle';e.wt=0}}
- for(const e of E){if(e.t!=='mach')continue;const p=PO[e.r];e.buf=e.buf||{};e.out=e.out||[];
+function fSim(dt){const DL=EL.dist.length>1?EL.dist.slice().sort((a,b)=>(b.wt||0)-(a.wt||0)):EL.dist;
+ for(const e of DL){
+  if(!e.off&&autoK(e.k)&&e.pend<AUTO_BUF&&have(e.k)>=1){const n=Math.min(AUTO_BUF-e.pend,Math.floor(have(e.k)+1e-9));S.res[e.k]-=n;FLOW[e.k]=(FLOW[e.k]||0)-n;e.pend+=n}
+  if(e.pend>0&&!e.off){e.tm=(e.tm||0)+dt;if(e.tm>=DIST_RATE){if(!fedFull(e)&&accept(frontOf(e),e.k,e)){e.pend--;e.tm=0;e.wt=0;e.st='run'}else{e.tm=DIST_RATE;e.wt=(e.wt||0)+dt;e.st='blk'}}}else{e.st=e.off?'off':'idle';e.wt=0}}
+ for(const e of EL.split){if(!e.item)continue;const outs=[e.d,(e.d+3)%4,(e.d+1)%4];e.rr=e.rr||0;
+  for(let i=0;i<3;i++){const dd=outs[(e.rr+i)%3],t=fAt(e.x+DX[dd],e.y+DY[dd]);if(!t||t===fAt(e.x-DX[e.d],e.y-DY[e.d]))continue;
+   const sd=e.d;e.d=dd;const ok=accept(t,e.item.k,e);e.d=sd;if(ok){e.item=null;e.rr=(e.rr+i+1)%3;break}}}
+ for(const e of EL.mach){const p=PO[e.r];e.buf=e.buf||{};e.out=e.out||[];
   if(!e.busy&&!e.out.length&&Object.entries(p.in).every(([k,n])=>(e.buf[k]||0)>=n)){for(const k in p.in)e.buf[k]-=p.in[k];e.busy=1;e.prog=0}
-  if(e.busy){e.prog+=dt/machT(p);if(e.prog>=1){e.busy=0;e.prog=0;for(const k in p.out)for(let i=0;i<p.out[k];i++)e.out.push(k)}}
+  if(e.busy){e.prog+=dt/machT(p,e.lv);if(e.prog>=1){e.busy=0;e.prog=0;for(const k in p.out)for(let i=0;i<p.out[k];i++)e.out.push(k)}}
   if(e.out.length&&accept(frontOf(e),e.out[0],e))e.out.shift();
   e.st=e.busy?'run':e.out.length?'full':'wait'}
- for(const e of E){if(e.t!=='belt'||!e.item)continue;e.item.p+=BELT_SPEED*dt;if(e.item.p>=1){const it=e.item;e.item=null;if(!accept(frontOf(e),it.k,e)){e.item=it;it.p=1}}}
+ for(const e of EL.belt){if(!e.item)continue;e.item.p+=BELT_SPEED*(e.fast?2:1)*dt;if(e.item.p>=1){const it=e.item;e.item=null;if(!accept(frontOf(e),it.k,e)){e.item=it;it.p=1}}}
 }
-function autoSim(dt,track){for(const e of Object.values(S.F.ents)){if(e.t!=='auto')continue;const p=PO[e.r];if(e.off||!S.bossWon.includes(p.b)){e.st='off';continue}
- e.prog=(e.prog||0)+dt*e.lv/p.t;const n=Math.floor(e.prog);if(n<=0)continue;
- let mb=maxBatches(p);for(const k in p.in)mb=Math.min(mb,Math.floor((have(k)-AUTO_RES)/p.in[k]+1e-9));mb=Math.max(0,mb);const m=Math.min(n,mb);if(m>0)runBatches(p,m,track);
- if(m<n){e.prog=Math.min(e.prog-m,1);e.blk=blockReason(p)||(()=>{const k=Object.keys(p.in).find(k=>have(k)-AUTO_RES<p.in[k]);return k?{t:'res',k}:null})()}else{e.prog-=n;e.blk=null}}}
 let lastF=performance.now();
 function fStep(){if(!S||!S.F)return;const now=performance.now();let dt=(now-lastF)/1000;lastF=now;if(dt<=0)return;
  if(dt>5)dt=Math.min(dt,90);while(dt>0){const d=Math.min(.05,dt);fSim(d);dt-=d}}
 
 /* actions */
-let TOOL='hand',ORI=2,PICK={dist:'bois',mach:'scierie',auto:null},SELE=null,POPS=[];
+let TOOL='hand',ORI=2,PICK={dist:'bois',mach:'scierie',fast:0},SELE=null,POPS=[];
 function nope(c){AU.fx('click');toast('Il manque : '+Object.entries(c).filter(([k,n])=>have(k)<n).map(([k,n])=>`${fmt(n-have(k))} ${RES[k].n.toLowerCase()}`).join(', '))}
 function fPop(e,txt,col){POPS.push({x:e.x+.5,y:e.y+.2,txt,col:col||'#fff',t:performance.now()})}
 function pour(e){const k=e.k,n=Math.min(DIST_LOAD,Math.floor(have(k)+1e-9),DIST_MAX-e.pend);
- if(n<=0){AU.fx('click');return toast(e.pend>=DIST_MAX?'Ce distributeur est plein':`Plus de ${RES[k].n.toLowerCase()} en stock : récolte-en à l'aventure`)}
+ if(n<=0){AU.fx('click');return toast(e.pend>=DIST_MAX?'Ce distributeur est plein':`Plus de ${RES[k].n.toLowerCase()} en stock`)}
  S.res[k]-=n;FLOW[k]=(FLOW[k]||0)-n;e.pend+=n;S.acts++;if(S.st)S.st.pour++;renderGoal();AU.fx('harvest');fPop(e,`+${n}`,'#ffe08a')}
-function beltAt(x,y,d){if(x<0||y<0||x>=S.F.w||y>=S.F.h)return false;const e=fAt(x,y);if(e){if(e.t==='belt'){e.d=d;return true}return false}
- if(!canPay(COST_BELT)){if(!beltAt.warned){beltAt.warned=1;nope(COST_BELT);setTimeout(()=>beltAt.warned=0,1500)}return false}pay(COST_BELT);fAdd({t:'belt',x,y,d,item:null});S.acts++;return true}
-function place(x,y){if(x<0||y<0||x>=S.F.w||y>=S.F.h||fAt(x,y))return;
+const inGrid=(x,y,w)=>x>=0&&y>=0&&x+(w||1)<=S.F.w&&y+(w||1)<=S.F.h;
+function freeAt(x,y,w,self){for(let a=0;a<w;a++)for(let b=0;b<w;b++){const o=fAt(x+a,y+b);if(o&&o!==self)return false}return inGrid(x,y,w)}
+function beltAt(x,y,d){if(!inGrid(x,y))return false;const e=fAt(x,y);if(e){if(e.t==='belt'){e.d=d;if(PICK.fast&&fastOK()&&!e.fast&&canPay(COST_FAST)){pay(COST_FAST);e.fast=1}return true}return false}
+ const c=PICK.fast&&fastOK()?COST_FAST:COST_BELT;
+ if(!canPay(c)){if(!beltAt.warned){beltAt.warned=1;nope(c);setTimeout(()=>beltAt.warned=0,1500)}return false}pay(c);fAdd({t:'belt',x,y,d,item:null,fast:c===COST_FAST?1:0});S.acts++;return true}
+function place(x,y){if(!inGrid(x,y)||fAt(x,y))return;
  if(TOOL==='dist'){if(!canPay(COST_DIST))return nope(COST_DIST);pay(COST_DIST);SELE=fAdd({t:'dist',x,y,d:ORI,k:PICK.dist,pend:0}).id}
- else if(TOOL==='mach'){const p=PO[PICK.mach];if(!p||!S.unlocked.includes(p.b))return toast('Choisis une machine dans la liste');if(!canPay(p.cost))return nope(p.cost);pay(p.cost);SELE=fAdd({t:'mach',x,y,d:ORI,r:p.id,buf:{},out:[]}).id}
- else if(TOOL==='auto'){const p=PO[PICK.auto];if(!p||!S.bossWon.includes(p.b))return toast('Choisis un automate dans la liste');const c=autoCost(p,autoCount(p.id));if(!canPay(c))return nope(c);pay(c);SELE=fAdd({t:'auto',x,y,d:0,r:p.id,lv:1,prog:0}).id}
+ else if(TOOL==='split'){if(!canPay(COST_SPLIT))return nope(COST_SPLIT);pay(COST_SPLIT);SELE=fAdd({t:'split',x,y,d:ORI,item:null,rr:0}).id}
+ else if(TOOL==='mach'){const p=PO[PICK.mach];if(!p||!S.unlocked.includes(p.b))return toast('Choisis une machine dans la liste');const w=BIG[p.id]?2:1;
+  if(!freeAt(x,y,w))return toast(w===2?'Il faut 2 × 2 cases libres':'Case occupée');if(!canPay(p.cost))return nope(p.cost);pay(p.cost);SELE=fAdd({t:'mach',x,y,d:ORI,r:p.id,buf:{},out:[],lv:1,sz:w}).id}
  else return;S.acts++;AU.fx('forge');fChanged()}
-function refundOf(e){if(e.t==='belt')return COST_BELT;if(e.t==='dist')return COST_DIST;if(e.t==='mach')return PO[e.r].cost;if(e.t==='auto')return scale(PO[e.r].cost,1,2);return{}}
+function refundOf(e){if(e.t==='belt')return e.fast?COST_FAST:COST_BELT;if(e.t==='dist')return COST_DIST;if(e.t==='split')return COST_SPLIT;if(e.t==='mach')return PO[e.r].cost;return{}}
 function demolish(e,silent){if(!e||e.t==='wh')return;const r=refundOf(e);for(const k in r)add(k,r[k]);
  if(e.item)add(e.item.k,1);if(e.pend)add(e.k,e.pend);if(e.buf)for(const k in e.buf)add(k,e.buf[k]);if(e.out)e.out.forEach(k=>add(k,1));
  fDel(e);if(SELE===e.id)SELE=null;if(!silent){S.acts++;AU.fx('click');fChanged()}}
-function chainOf(m){const seen=new Set([m.id]),q=[m],res=[m];
- while(q.length){const e=q.shift(),nb=[];const f=frontOf(e);if(f)nb.push(f);
-  for(let d=0;d<4;d++){const n=fAt(e.x+DX[d],e.y+DY[d]);if(n&&(n.t==='belt'||n.t==='dist')&&frontOf(n)===e)nb.push(n)}
-  for(const n of nb){if(seen.has(n.id)||!(n.t==='belt'||n.t==='dist'))continue;seen.add(n.id);res.push(n);q.push(n)}}
- return res}
-function replaceChain(m){const p=PO[m.r];if(!S.bossWon.includes(p.b))return;const c=autoCost(p,autoCount(p.id));if(!canPay(c))return nope(c);
- pay(c);const ch=chainOf(m),x=m.x,y=m.y;ch.forEach(e=>demolish(e,true));const a=fAdd({t:'auto',x,y,d:0,r:p.id,lv:1,prog:0});SELE=a.id;S.acts++;
- AU.fx('explore');fPop(a,'AUTO','#8ff08a');toast(`${ch.length} élément${ch.length>1?'s':''} retiré${ch.length>1?'s':''} et remboursé${ch.length>1?'s':''} : ${autoName(p)} installée`);fChanged()}
-function upAuto(e){const p=PO[e.r],c=postUp(p,e.lv);if(!canPay(c))return nope(c);pay(c);e.lv++;S.acts++;AU.fx('forge');toast(`${autoName(p)} niveau ${e.lv}`);fChanged()}
-function expandGrid(){const c=GRIDC[S.F.w];if(!c||S.F.w>=GRID_MAX)return;if(!canPay(c))return nope(c);pay(c);S.F.w++;S.F.h++;S.acts++;AU.fx('explore');toast(`Camp agrandi : ${S.F.w} × ${S.F.h}`);fChanged();renderCamp()}
+function upMach(e){if(e.lv>=MACH_MAX)return;const c=machUp(PO[e.r],e.lv);if(!canPay(c))return nope(c);pay(c);e.lv++;S.acts++;AU.fx('forge');fPop(e,'N'+e.lv,'#8ff08a');fChanged()}
+function expandGrid(){const c=GRIDC[S.F.w];if(!c||S.F.w>=GRID_MAX)return;if(!canPay(c))return nope(c);pay(c);S.F.w++;S.F.h++;S.acts++;AU.fx('explore');toast(`Terrain agrandi : ${S.F.w} × ${S.F.h}`);fChanged();renderCamp()}
+function addDock(){const n=S.F.docks||2;if(n>=DOCK_MAX)return;const c=DOCKC[n+1];if(!canPay(c))return nope(c);pay(c);S.F.docks=n+1;S.acts++;AU.fx('explore');toast(`Quai ${n+1} ouvert`);fChanged();if(CT!=='grid')renderCamp()}
 function gridToTop(){const c=$('campCv');if(!c)return;const r=c.getBoundingClientRect();if(r.top>70||r.top<0)window.scrollTo({top:window.scrollY+r.top-8,behavior:'smooth'})}
 function fChanged(){fIndex();renderFInfo(true);renderGoal();save()}
 let MOVE=null;
-function moveTo(e,x,y){if(!e||e.t==='wh'||x<0||y<0||x>=S.F.w||y>=S.F.h)return false;const o=fAt(x,y);if(o&&o!==e){AU.fx('click');toast('Cette case est occupée');return false}
+function moveTo(e,x,y){if(!e||e.t==='wh')return false;if(!freeAt(x,y,szOf(e),e)){AU.fx('click');toast('Pas assez de place ici');return false}
  e.x=x;e.y=y;S.acts++;AU.fx('forge');MOVE=null;SELE=e.id;fChanged();return true}
+function rotate(e){e.d=(e.d+1)%4;AU.fx('click');fChanged()}
 function tapCell(x,y){const e=fAt(x,y);
- if(MOVE){const m=S.F.ents[MOVE];if(!m||e===m){MOVE=null;return renderFInfo(true)}if(!e)return moveTo(m,x,y);AU.fx('click');return toast('Choisis une case libre')}
- if(TOOL==='hand'){if(!e){SELE=null;return renderFInfo(true)}const was=SELE;SELE=e.id;if(e.t==='dist')pour(e);else AU.fx('click');renderFInfo(true);if(was!==e.id)gridToTop();return}
+ if(MOVE){const m=S.F.ents[MOVE];if(!m||e===m){MOVE=null;return renderFInfo(true)}return moveTo(m,x,y)}
+ if(TOOL==='hand'){if(!e){SELE=null;return renderFInfo(true)}const was=SELE;SELE=e.id;if(e.t==='dist'&&!autoK(e.k))pour(e);else AU.fx('click');renderFInfo(true);if(was!==e.id)gridToTop();return}
  if(TOOL==='demo'){if(e&&e.t!=='wh')demolish(e);return}
  if(!e)return place(x,y);
- if((e.t==='dist'&&TOOL==='dist')||(e.t==='mach'&&TOOL==='mach')){e.d=(e.d+1)%4;AU.fx('click');fChanged();return}
+ if((e.t==='dist'&&TOOL==='dist')||(e.t==='mach'&&TOOL==='mach')||(e.t==='split'&&TOOL==='split'))return rotate(e);
  SELE=e.id;renderFInfo(true)}
 
 /* dessin */
@@ -1205,55 +1266,64 @@ function icon(k){if(!IMG[k]){const i=new Image();i.src='data:image/svg+xml;chars
 let cv=null,cx=null,CS=40;
 function rr(x,y,w,h,r,fill,stroke,lw){cx.beginPath();cx.roundRect?cx.roundRect(x,y,w,h,r):cx.rect(x,y,w,h);if(fill){cx.fillStyle=fill;cx.fill()}if(stroke){cx.lineWidth=lw||1;cx.strokeStyle=stroke;cx.stroke()}}
 function drawIcon(k,x,y,s){const im=icon(k);if(im.complete&&im.naturalWidth)cx.drawImage(im,x-s/2,y-s/2,s,s)}
-function arrowAt(d,col){cx.save();cx.rotate(d*Math.PI/2);cx.fillStyle=col;cx.beginPath();cx.moveTo(CS*.5,0);cx.lineTo(CS*.36,-CS*.1);cx.lineTo(CS*.36,CS*.1);cx.closePath();cx.fill();cx.restore()}
+function arrowAt(d,col,len){len=len||.5;cx.save();cx.rotate(d*Math.PI/2);cx.fillStyle=col;cx.beginPath();cx.moveTo(CS*len,0);cx.lineTo(CS*(len-.14),-CS*.1);cx.lineTo(CS*(len-.14),CS*.1);cx.closePath();cx.fill();cx.restore()}
 function drawCamp(now){if(!cv||!S||!S.F)return;const F=S.F,W=cv.clientWidth;if(!W)return;CS=W/F.w;const H=CS*F.h;const dpr=Math.min(2,devicePixelRatio||1);
  if(cv.width!==Math.round(W*dpr)||cv.height!==Math.round(H*dpr)){cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.height=H+'px'}
  cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,W,H);
  for(let y=0;y<F.h;y++)for(let x=0;x<F.w;x++){cx.fillStyle=(x+y)%2?'#558443':'#5b8c48';cx.fillRect(x*CS,y*CS,CS+.5,CS+.5)}
  const E=Object.values(F.ents),t=now/1000;
- // tapis (droits ou en virage selon d'où arrivent les objets)
+ // quais (zones de réception de l'entrepôt)
+ dockCells().forEach((c,i)=>{if(!inGrid(c[0],c[1]))return;const on=i<(F.docks||2),x=c[0]*CS,y=c[1]*CS;
+  if(on){cx.fillStyle='rgba(242,207,74,.28)';cx.fillRect(x,y,CS,CS);cx.save();cx.beginPath();cx.rect(x,y,CS,CS);cx.clip();cx.strokeStyle='rgba(39,34,27,.35)';cx.lineWidth=CS*.08;for(let s=-CS;s<CS*2;s+=CS*.28){cx.beginPath();cx.moveTo(x+s,y);cx.lineTo(x+s-CS,y+CS);cx.stroke()}cx.restore()}
+  else{cx.strokeStyle='rgba(255,255,255,.22)';cx.setLineDash([4,4]);cx.lineWidth=1.5;cx.strokeRect(x+3,y+3,CS-6,CS-6);cx.setLineDash([])}});
+ // tapis
  const TURN={};for(const e of E){if(e.t!=='belt')continue;let back=false,side=null;
-  for(let k=0;k<4;k++){const n=fAt(e.x+DX[k],e.y+DY[k]);if(!n||n.t==='wh'||n.t==='auto'||frontOf(n)!==e)continue;const rel=(k-e.d+4)%4;if(rel===2)back=true;else if(rel===1||rel===3)side=side===null?rel:side}
+  for(let k=0;k<4;k++){const n=fAt(e.x+DX[k],e.y+DY[k]);if(!n||n.t==='wh'||frontOf(n)!==e)continue;const rel=(k-e.d+4)%4;if(rel===2)back=true;else if(rel===1||rel===3)side=side===null?rel:side}
   TURN[e.id]=!back&&side!==null?side:0}
- for(const e of E){if(e.t!=='belt')continue;cx.save();cx.translate((e.x+.5)*CS,(e.y+.5)*CS);cx.rotate(e.d*Math.PI/2);const tn=TURN[e.id];
+ for(const e of E){if(e.t!=='belt')continue;cx.save();cx.translate((e.x+.5)*CS,(e.y+.5)*CS);cx.rotate(e.d*Math.PI/2);const tn=TURN[e.id],sp=BELT_SPEED*(e.fast?2:1),chev=e.fast?'rgba(242,207,74,.75)':'rgba(140,155,175,.45)';
   if(tn){const sy=tn===3?-1:1;cx.beginPath();cx.rect(-CS*.5,-CS*.5,CS,CS);cx.clip();
-   const ox=CS*.5,oy=sy*CS*.5,a0=Math.PI,a1=sy<0?Math.PI/2:Math.PI*1.5,ccw=sy>0;
+   const ox=CS*.5,oy=sy*CS*.5,a0=Math.PI,a1=sy<0?Math.PI/2:Math.PI*1.5;
    cx.lineCap='butt';cx.strokeStyle='#2e3440';cx.lineWidth=CS*.72;cx.beginPath();cx.arc(ox,oy,CS*.5,a0,a1,sy<0);cx.stroke();
-   cx.strokeStyle='#4a5260';cx.lineWidth=CS*.07;cx.beginPath();cx.arc(ox,oy,CS*.5-CS*.365,a0,a1,sy<0);cx.stroke();cx.beginPath();cx.arc(ox,oy,CS*.5+CS*.365,a0,a1,sy<0);cx.stroke();
-   cx.strokeStyle='rgba(140,155,175,.45)';cx.lineWidth=Math.max(1.5,CS*.06);
-   for(let i=0;i<2;i++){const q=(t*BELT_SPEED+i*.5)%1,ang=Math.PI+(sy<0?-1:1)*q*Math.PI/2;const px=ox+Math.cos(ang)*CS*.5,py=oy+Math.sin(ang)*CS*.5;
+   cx.strokeStyle=e.fast?'#8a7a3a':'#4a5260';cx.lineWidth=CS*.07;cx.beginPath();cx.arc(ox,oy,CS*.5-CS*.365,a0,a1,sy<0);cx.stroke();cx.beginPath();cx.arc(ox,oy,CS*.5+CS*.365,a0,a1,sy<0);cx.stroke();
+   cx.strokeStyle=chev;cx.lineWidth=Math.max(1.5,CS*.06);
+   for(let i=0;i<2;i++){const q=(t*sp+i*.5)%1,ang=Math.PI+(sy<0?-1:1)*q*Math.PI/2;const px=ox+Math.cos(ang)*CS*.5,py=oy+Math.sin(ang)*CS*.5;
     cx.save();cx.translate(px,py);cx.rotate(ang+(sy<0?-Math.PI/2:Math.PI/2));cx.beginPath();cx.moveTo(-CS*.08,-CS*.16);cx.lineTo(CS*.06,0);cx.lineTo(-CS*.08,CS*.16);cx.stroke();cx.restore()}}
-  else{cx.fillStyle='#2e3440';cx.fillRect(-CS*.5,-CS*.36,CS,CS*.72);cx.fillStyle='#4a5260';cx.fillRect(-CS*.5,-CS*.4,CS,CS*.07);cx.fillRect(-CS*.5,CS*.33,CS,CS*.07);
-   cx.strokeStyle='rgba(140,155,175,.45)';cx.lineWidth=Math.max(1.5,CS*.06);for(let i=0;i<2;i++){const o=((t*BELT_SPEED+i*.5)%1-.5)*CS;cx.beginPath();cx.moveTo(o-CS*.08,-CS*.16);cx.lineTo(o+CS*.06,0);cx.lineTo(o-CS*.08,CS*.16);cx.stroke()}}
+  else{cx.fillStyle='#2e3440';cx.fillRect(-CS*.5,-CS*.36,CS,CS*.72);cx.fillStyle=e.fast?'#8a7a3a':'#4a5260';cx.fillRect(-CS*.5,-CS*.4,CS,CS*.07);cx.fillRect(-CS*.5,CS*.33,CS,CS*.07);
+   cx.strokeStyle=chev;cx.lineWidth=Math.max(1.5,CS*.06);for(let i=0;i<2;i++){const o=((t*sp+i*.5)%1-.5)*CS;cx.beginPath();cx.moveTo(o-CS*.08,-CS*.16);cx.lineTo(o+CS*.06,0);cx.lineTo(o-CS*.08,CS*.16);cx.stroke()}}
   cx.restore()}
  // entrepôt
  for(const e of E){if(e.t!=='wh')continue;const x=e.x*CS,y=e.y*CS,s=CS*2;rr(x+3,y+3,s-6,s-6,6,'#8a6a44','#4f3a22',2);cx.fillStyle='#6e4f33';cx.fillRect(x+3,y+3,s-6,s*.22);
   cx.strokeStyle='rgba(0,0,0,.18)';cx.lineWidth=1;for(let i=1;i<5;i++){cx.beginPath();cx.moveTo(x+6,y+s*.22+i*(s*.14));cx.lineTo(x+s-6,y+s*.22+i*(s*.14));cx.stroke()}
   cx.fillStyle='#fbf6ea';cx.font=`800 ${Math.max(8,CS*.24)}px Outfit, sans-serif`;cx.textAlign='center';cx.textBaseline='middle';cx.fillText('ENTREPÔT',x+s/2,y+s*.12);drawIcon('planches',x+s/2,y+s*.6,CS*.8)}
  // bâtiments
- for(const e of E){if(e.t==='belt'||e.t==='wh')continue;const x=e.x*CS,y=e.y*CS,c=(e.x+.5)*CS,m=(e.y+.5)*CS;
-  if(e.t==='dist'){rr(x+CS*.1,y+CS*.1,CS*.8,CS*.8,CS*.14,'#c9884a','#6e4722',2);cx.save();cx.translate(c,m);arrowAt(e.d,'#f2cf4a');cx.restore();drawIcon(e.k,c,m,CS*.46);
-   if(e.pend>0){const s=String(e.pend);cx.font=`800 ${Math.max(8,CS*.24)}px Outfit, sans-serif`;const w=cx.measureText(s).width+6;rr(x+CS-w-1,y+1,w,CS*.3,4,'#1d2835');cx.fillStyle='#ffe08a';cx.textAlign='center';cx.textBaseline='middle';cx.fillText(s,x+CS-w/2-1,y+1+CS*.15)}}
-  if(e.t==='mach'){const p=PO[e.r],col=BIOMES[p.b].c;rr(x+CS*.06,y+CS*.06,CS*.88,CS*.88,CS*.12,col,'rgba(0,0,0,.45)',2);rr(x+CS*.16,y+CS*.16,CS*.68,CS*.56,CS*.08,'rgba(255,255,255,.18)');
-   cx.save();cx.translate(c,m);arrowAt(e.d,'#fff');cx.restore();drawIcon(Object.keys(p.out)[0],c,m-CS*.12,CS*.36);cx.fillStyle='#fff';cx.font=`800 ${Math.max(7,CS*.16)}px Outfit, sans-serif`;cx.textAlign='center';cx.textBaseline='middle';cx.fillText(SHORT[p.id]||p.n,c,y+CS*.66);
-   cx.fillStyle='rgba(0,0,0,.4)';cx.fillRect(x+CS*.16,y+CS*.8,CS*.68,CS*.07);cx.fillStyle=e.st==='full'?'#e8675b':'#8ff08a';cx.fillRect(x+CS*.16,y+CS*.8,CS*.68*(e.busy?e.prog:e.st==='full'?1:0),CS*.08)}
-  if(e.t==='auto'){const p=PO[e.r],col=BIOMES[p.b].c;const g=cx.createLinearGradient(x,y,x,y+CS);g.addColorStop(0,col);g.addColorStop(1,'#1d2835');rr(x+CS*.04,y+CS*.04,CS*.92,CS*.92,CS*.16,g,e.off?'#6f6552':e.blk?'#f2cf4a':'#8ff08a',2.5);
-   cx.save();cx.translate(c,m);cx.rotate(e.off||e.blk?0:t*1.5);cx.strokeStyle='rgba(255,255,255,.35)';cx.lineWidth=CS*.07;for(let i=0;i<6;i++){cx.rotate(Math.PI/3);cx.beginPath();cx.moveTo(CS*.27,0);cx.lineTo(CS*.38,0);cx.stroke()}cx.beginPath();cx.arc(0,0,CS*.27,0,7);cx.stroke();cx.restore();
-   drawIcon(Object.keys(p.out)[0],c,m,CS*.4);cx.fillStyle='#fff';cx.font=`800 ${Math.max(7,CS*.18)}px Outfit, sans-serif`;cx.textAlign='center';cx.textBaseline='middle';cx.fillText('N'+e.lv,x+CS*.8,y+CS*.18)}
-  if(MOVE===e.id){cx.fillStyle='rgba(242,207,74,.25)';cx.fillRect(x,y,CS,CS)}
-  if(SELE===e.id){cx.strokeStyle='#f2cf4a';cx.lineWidth=3;cx.strokeRect(x+1.5,y+1.5,CS-3,CS-3)}}
+ for(const e of E){if(e.t==='belt'||e.t==='wh')continue;const w=szOf(e),x=e.x*CS,y=e.y*CS,c=(e.x+w/2)*CS,m=(e.y+w/2)*CS;
+  if(e.t==='dist'){const au=autoK(e.k);rr(x+CS*.1,y+CS*.1,CS*.8,CS*.8,CS*.14,e.off?'#7a6a5a':au?'#d99a4a':'#c9884a',au?'#f2cf4a':'#6e4722',au?2.5:2);cx.save();cx.translate(c,m);arrowAt(e.d,'#f2cf4a');cx.restore();drawIcon(e.k,c,m,CS*.46);
+   if(au){cx.save();cx.translate(x+CS*.24,y+CS*.24);cx.rotate(e.off?0:t*2);cx.strokeStyle='#27221b';cx.lineWidth=CS*.05;cx.beginPath();cx.arc(0,0,CS*.08,0,7);cx.stroke();for(let i=0;i<4;i++){cx.rotate(Math.PI/2);cx.beginPath();cx.moveTo(CS*.08,0);cx.lineTo(CS*.13,0);cx.stroke()}cx.restore()}
+   else if(e.pend>0){const s=String(e.pend);cx.font=`800 ${Math.max(8,CS*.24)}px Outfit, sans-serif`;const tw=cx.measureText(s).width+6;rr(x+CS-tw-1,y+1,tw,CS*.3,4,'#1d2835');cx.fillStyle='#ffe08a';cx.textAlign='center';cx.textBaseline='middle';cx.fillText(s,x+CS-tw/2-1,y+1+CS*.15)}}
+  if(e.t==='split'){rr(x+CS*.12,y+CS*.12,CS*.76,CS*.76,CS*.14,'#56657a','#2b3542',2);cx.save();cx.translate(c,m);arrowAt(e.d,'#e9e3d5',.46);arrowAt((e.d+1)%4,'#e9e3d5',.46);arrowAt((e.d+3)%4,'#e9e3d5',.46);cx.restore();
+   cx.fillStyle='#e9e3d5';cx.beginPath();cx.arc(c,m,CS*.1,0,7);cx.fill();if(e.item)drawIcon(e.item.k,c,m,CS*.3)}
+  if(e.t==='mach'){const p=PO[e.r],col=BIOMES[p.b].c,S2=CS*w;rr(x+CS*.06,y+CS*.06,S2-CS*.12,S2-CS*.12,CS*.14,col,e.noDock?'#e8675b':'rgba(0,0,0,.45)',2);rr(x+CS*.16,y+CS*.16,S2-CS*.32,S2-CS*(w===2?.62:.44),CS*.08,'rgba(255,255,255,.18)');
+   const oc=outCell(e);cx.save();cx.translate((oc[0]-DX[e.d]+.5)*CS,(oc[1]-DY[e.d]+.5)*CS);arrowAt(e.d,'#fff');cx.restore();
+   drawIcon(Object.keys(p.out)[0],c,m-CS*(w===2?.2:.12),CS*(w===2?.7:.36));cx.fillStyle='#fff';cx.font=`800 ${Math.max(7,CS*(w===2?.22:.16))}px Outfit, sans-serif`;cx.textAlign='center';cx.textBaseline='middle';cx.fillText(SHORT[p.id]||p.n,c,y+S2-CS*(w===2?.5:.34));
+   if(e.lv>1){cx.font=`800 ${Math.max(7,CS*.17)}px Outfit, sans-serif`;cx.fillStyle='#ffe08a';cx.fillText('N'+e.lv,x+CS*.26,y+CS*.24)}
+   cx.fillStyle='rgba(0,0,0,.4)';cx.fillRect(x+CS*.16,y+S2-CS*.2,S2-CS*.32,CS*.07);cx.fillStyle=e.st==='full'?'#e8675b':'#8ff08a';cx.fillRect(x+CS*.16,y+S2-CS*.2,(S2-CS*.32)*(e.busy?e.prog:e.st==='full'?1:0),CS*.08)}
+  if(MOVE===e.id){cx.fillStyle='rgba(242,207,74,.25)';cx.fillRect(x,y,CS*w,CS*w)}
+  if(SELE===e.id){cx.strokeStyle='#f2cf4a';cx.lineWidth=3;cx.strokeRect(x+1.5,y+1.5,CS*w-3,CS*w-3)}}
  const se=SELE&&F.ents[SELE];if(se&&se.t==='wh'){cx.strokeStyle='#f2cf4a';cx.lineWidth=3;cx.strokeRect(se.x*CS+1.5,se.y*CS+1.5,CS*2-3,CS*2-3)}
  // repère de l'étape guidée
  const q=typeof curQ==='function'&&curQ();if(q&&q.hl){const tg=E.find(e=>(e.t==='dist'&&e.k===q.hl)||(e.t==='mach'&&e.r===q.hl));if(tg&&!(q.f()[0]>=q.f()[1])){const a=(Math.sin(now/260)+1)/2;cx.strokeStyle=`rgba(242,207,74,${.5+a*.5})`;cx.lineWidth=3;cx.beginPath();cx.arc((tg.x+.5)*CS,(tg.y+.5)*CS,CS*(.58+a*.1),0,7);cx.stroke();
-  const tx='Touche ici',fs=Math.max(10,CS*.24);cx.font=`800 ${fs}px Outfit, sans-serif`;const w=cx.measureText(tx).width+10,bx=Math.min(F.w*CS-w-2,Math.max(2,(tg.x+.5)*CS-w/2)),by=(tg.y-.55)*CS;rr(bx,by-fs*.75,w,fs*1.5,6,'#f2cf4a');cx.fillStyle='#27221b';cx.textAlign='center';cx.textBaseline='middle';cx.fillText(tx,bx+w/2,by)}}
+  const tx='Touche ici',fs=Math.max(10,CS*.24);cx.font=`800 ${fs}px Outfit, sans-serif`;const tw=cx.measureText(tx).width+10,bx=Math.min(F.w*CS-tw-2,Math.max(2,(tg.x+.5)*CS-tw/2)),by=(tg.y-.55)*CS;rr(bx,by-fs*.75,tw,fs*1.5,6,'#f2cf4a');cx.fillStyle='#27221b';cx.textAlign='center';cx.textBaseline='middle';cx.fillText(tx,bx+tw/2,by)}}
  // objets sur les tapis
  for(const e of E){if(e.t!=='belt'||!e.item)continue;let px,py;const tn=TURN[e.id];
   if(tn){const sy=tn===3?-1:1,ang=Math.PI+(sy<0?-1:1)*e.item.p*Math.PI/2,lx=.5+Math.cos(ang)*.5,ly=sy*.5+Math.sin(ang)*.5,c=Math.cos(e.d*Math.PI/2),si=Math.sin(e.d*Math.PI/2);
    px=(e.x+.5+lx*c-ly*si)*CS;py=(e.y+.5+lx*si+ly*c)*CS}
   else{px=(e.x+.5+(e.item.p-.5)*DX[e.d])*CS;py=(e.y+.5+(e.item.p-.5)*DY[e.d])*CS}cx.fillStyle='rgba(0,0,0,.35)';cx.beginPath();cx.arc(px,py,CS*.24,0,7);cx.fill();drawIcon(e.item.k,px,py,CS*.4)}
+ // tapis qui arrivent hors quai
+ for(const e of E){if(!e.noDock)continue;const f=frontOf(e);if(!f||f.t!=='wh'){e.noDock=0;continue}const c=fromCell(e);const x=(c[0]+.5+DX[e.d]*.5)*CS,y=(c[1]+.5+DY[e.d]*.5)*CS;
+  cx.fillStyle='#e8675b';cx.beginPath();cx.arc(x,y,CS*.17,0,7);cx.fill();cx.strokeStyle='#fff';cx.lineWidth=CS*.05;cx.beginPath();cx.moveTo(x-CS*.07,y-CS*.07);cx.lineTo(x+CS*.07,y+CS*.07);cx.moveTo(x+CS*.07,y-CS*.07);cx.lineTo(x-CS*.07,y+CS*.07);cx.stroke()}
  // bulles
  POPS=POPS.filter(p=>now-p.t<900);for(const p of POPS){const a=1-(now-p.t)/900;cx.globalAlpha=a;cx.font=`800 ${Math.max(10,CS*.3)}px Outfit, sans-serif`;cx.textAlign='center';cx.fillStyle='#000';cx.fillText(p.txt,p.x*CS+1,(p.y-(1-a)*.6)*CS+1);cx.fillStyle=p.col;cx.fillText(p.txt,p.x*CS,(p.y-(1-a)*.6)*CS);cx.globalAlpha=1}
- if(DRAG&&TOOL==='hand'&&DRAG.moved){const e=fAt(DRAG.sx,DRAG.sy);if(e&&e.t!=='wh'){const ok=!fAt(DRAG.x,DRAG.y)||fAt(DRAG.x,DRAG.y)===e;cx.fillStyle=ok?'rgba(242,207,74,.35)':'rgba(232,103,91,.35)';cx.fillRect(DRAG.x*CS,DRAG.y*CS,CS,CS);cx.strokeStyle=ok?'#f2cf4a':'#e8675b';cx.lineWidth=2;cx.strokeRect(DRAG.x*CS+1,DRAG.y*CS+1,CS-2,CS-2)}}
+ if(DRAG&&TOOL==='hand'&&DRAG.moved){const e=fAt(DRAG.sx,DRAG.sy);if(e&&e.t!=='wh'){const w=szOf(e),ok=freeAt(DRAG.x,DRAG.y,w,e);cx.fillStyle=ok?'rgba(242,207,74,.35)':'rgba(232,103,91,.35)';cx.fillRect(DRAG.x*CS,DRAG.y*CS,CS*w,CS*w);cx.strokeStyle=ok?'#f2cf4a':'#e8675b';cx.lineWidth=2;cx.strokeRect(DRAG.x*CS+1,DRAG.y*CS+1,CS*w-2,CS*w-2)}}
  if(DRAG&&TOOL==='belt'){cx.strokeStyle='rgba(242,207,74,.9)';cx.lineWidth=2;cx.strokeRect(DRAG.x*CS+1,DRAG.y*CS+1,CS-2,CS-2)}
 }
 function campLoop(now){if(S&&S.F&&TAB==='camp'&&CT==='grid'){fStep();drawCamp(now);liveFInfo()}requestAnimationFrame(campLoop)}
@@ -1262,79 +1332,89 @@ function campLoop(now){if(S&&S.F&&TAB==='camp'&&CT==='grid'){fStep();drawCamp(no
 let DRAG=null;
 function cellOf(ev){const r=cv.getBoundingClientRect();return[Math.floor((ev.clientX-r.left)/CS),Math.floor((ev.clientY-r.top)/CS)]}
 function bindCanvas(){cv=$('campCv');cx=cv.getContext('2d');
- cv.addEventListener('pointerdown',ev=>{ev.preventDefault();try{cv.setPointerCapture(ev.pointerId)}catch(e){}const[x,y]=cellOf(ev);DRAG={x,y,sx:x,sy:y,moved:false}});
- cv.addEventListener('pointermove',ev=>{if(DRAG&&TOOL==='hand'){const[x,y]=cellOf(ev);if(x!==DRAG.x||y!==DRAG.y){DRAG.x=x;DRAG.y=y;DRAG.moved=true}return}if(!DRAG||TOOL!=='belt')return;const[x,y]=cellOf(ev);let guard=0;
+ cv.addEventListener('pointerdown',ev=>{ev.preventDefault();try{cv.setPointerCapture(ev.pointerId)}catch(e){}const[x,y]=cellOf(ev);const e=fAt(x,y);DRAG={x,y,sx:x,sy:y,moved:false,ox:e?x-e.x:0,oy:e?y-e.y:0}});
+ cv.addEventListener('pointermove',ev=>{if(DRAG&&TOOL==='hand'){const[x,y]=cellOf(ev);const nx=x-DRAG.ox,ny=y-DRAG.oy;if(nx!==DRAG.x||ny!==DRAG.y){if(x!==DRAG.sx||y!==DRAG.sy||DRAG.moved){DRAG.x=nx;DRAG.y=ny;DRAG.moved=true}}return}if(!DRAG||TOOL!=='belt')return;const[x,y]=cellOf(ev);let guard=0;
   while((x!==DRAG.x||y!==DRAG.y)&&guard++<30){const dx=Math.sign(x-DRAG.x),dy=dx?0:Math.sign(y-DRAG.y);const d=dx===1?0:dx===-1?2:dy===1?1:3;
    if(!beltAt(DRAG.x,DRAG.y,d))break;const nx=DRAG.x+dx,ny=DRAG.y+dy;const n=fAt(nx,ny);DRAG.x=nx;DRAG.y=ny;DRAG.moved=true;if(n&&n.t!=='belt')break;if(!beltAt(nx,ny,d))break}});
  const end=ev=>{if(!DRAG)return;const{sx,sy,moved}=DRAG,last={x:DRAG.x,y:DRAG.y};DRAG=null;
   if(TOOL==='belt'){if(!moved){const e=fAt(sx,sy);if(e&&e.t==='belt'){e.d=(e.d+1)%4;AU.fx('click')}else if(!e){if(beltAt(sx,sy,ORI))AU.fx('click')}else{SELE=e.id}}else AU.fx('forge');return fChanged()}
-  if(TOOL==='hand'&&moved){const e=fAt(sx,sy),{x,y}=last;if(e&&e.t!=='wh'&&!(x===sx&&y===sy)){moveTo(e,x,y);return}}
+  if(TOOL==='hand'&&moved){const e=fAt(sx,sy);if(e&&e.t!=='wh'&&!(last.x===e.x&&last.y===e.y)){moveTo(e,last.x,last.y);return}}
   tapCell(sx,sy)};
  cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',()=>{DRAG=null})}
 
-/* panneau d'outils et d'infos */
-const TOOLS=[['hand','Main'],['belt','Tapis'],['dist','Distributeur'],['mach','Machine'],['auto','Automate'],['demo','Démolir']];
-function gridHTML(){const c=GRIDC[S.F.w];
- return `<div class="tools" id="fTools"></div><div class="gwrap"><canvas id="campCv" aria-label="Plan du camp"></canvas></div>
- <div id="fSub"></div><div id="fInfo"></div>
- ${c&&S.F.w<GRID_MAX?`<div class="urow"><div><b>Agrandir le camp</b> <small>${S.F.w} × ${S.F.h} → ${S.F.w+1} × ${S.F.h+1}</small><p>Plus de place pour tes chaînes.</p></div><button class="btn sm" data-fx="expand" data-need="${need(c)}">Agrandir</button><div class="cost">${costL(c)}</div></div>`:''}`}
-function toolsHTML(){const anyAuto=S.bossWon.length>0;
- return TOOLS.map(([k,n])=>`<button data-tool="${k}" aria-pressed="${TOOL===k}" ${k==='auto'&&!anyAuto?'disabled':''}>${n}</button>`).join('')}
-const oriHTML=()=>`<div class="orirow"><span>Sens de sortie</span>${[0,1,2,3].map(d=>`<button data-ori="${d}" aria-pressed="${ORI===d}" aria-label="Sens ${ARW[d]}">${ARW[d]}</button>`).join('')}</div>`;
+/* barre d'outils et panneaux */
+const TI=b=>`<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${b}</svg>`;
+const TOOLS=[
+ ['hand','Main',TI('<path d="M8 13V5.5a1.5 1.5 0 013 0V11m0-6.5a1.5 1.5 0 013 0V11m0-4.5a1.5 1.5 0 013 0V13c0 4.4-2.6 8-6.5 8-2.6 0-4.3-1.3-5.6-3.4L3.6 14a1.6 1.6 0 012.6-1.8L8 14"/>')],
+ ['belt','Tapis',TI('<rect x="2" y="7" width="20" height="10" rx="2"/><path d="M7 10l2 2-2 2M12 10l2 2-2 2M17 10l2 2-2 2"/>')],
+ ['dist','Distrib.',TI('<rect x="3" y="4" width="11" height="16" rx="2"/><path d="M14 12h7m-3-3l3 3-3 3"/>')],
+ ['mach','Machine',TI('<circle cx="12" cy="12" r="3.5"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>')],
+ ['split','Répartir',TI('<path d="M3 12h7M10 12l6-6h5M10 12l6 6h5M10 12h11"/>')],
+ ['demo','Démolir',TI('<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>')]];
+function gridHTML(){return `<div class="ftools" id="fTools"></div><div id="fSub"></div><div class="gwrap"><canvas id="campCv" aria-label="Plan de l'atelier"></canvas></div><div id="fInfo"></div>`}
+function toolsHTML(){return TOOLS.map(([k,n,ic])=>`<button data-tool="${k}" aria-pressed="${TOOL===k}">${ic}<span>${n}</span></button>`).join('')}
+const oriHTML=()=>`<div class="orirow">${[0,1,2,3].map(d=>`<button data-ori="${d}" aria-pressed="${ORI===d}" aria-label="Sens ${ARW[d]}">${ARW[d]}</button>`).join('')}</div>`;
+const TIPS={belt:'Glisse le doigt pour tracer. Touche un tapis pour le tourner.',dist:'Sort une matière du stock et la pose devant lui.',mach:'Prend ses matières sur les côtés et à l’arrière, sort le produit devant.',split:'Partage un tapis : devant, à gauche et à droite, chacun son tour.',demo:'Tout est remboursé.',hand:'Touche un distributeur pour le remplir. Glisse un élément pour le déplacer.'};
+function tip(){S.tips=S.tips||{};const n=S.tips[TOOL]||0;return n<3?`<p class="hint tip">${TIPS[TOOL]}</p>`:''}
 function subHTML(){
- if(TOOL==='belt')return `<p class="hint">Glisse le doigt sur la grille pour tracer un tapis, dans le sens du trajet. Touche un tapis pour le faire tourner. Coût : ${costL(COST_BELT)} par case.</p>`;
- if(TOOL==='dist')return `<p class="hint">Un distributeur sort une matière de l'entrepôt et la pose devant lui (flèche jaune). Choisis la matière et le sens, puis touche une case libre. Coût : ${costL(COST_DIST)}</p>${oriHTML()}<div class="pick">${S.known.map(k=>`<button data-pk="dist:${k}" aria-pressed="${PICK.dist===k}" title="${RES[k].n}">${IC[k]}<span>${RES[k].n}</span></button>`).join('')}</div>`;
- if(TOOL==='mach'){const ps=POSTES.filter(p=>S.unlocked.includes(p.b));return `<p class="hint">Une machine prend ses matières sur les côtés et à l'arrière, et sort le produit devant (flèche blanche). Choisis la machine et le sens, puis touche une case libre. Touche une machine déjà posée pour la tourner.</p>${oriHTML()}<div class="mlist">${ps.map(p=>`<button class="mi" data-pk="mach:${p.id}" aria-pressed="${PICK.mach===p.id}"><b>${p.n}</b><span class="recipe">${recipe(p)}</span><span class="cost">${costL(p.cost)}</span></button>`).join('')}</div>`}
- if(TOOL==='auto'){const ps=POSTES.filter(p=>S.bossWon.includes(p.b));return `<p class="hint">Un automate puise directement dans l'entrepôt et y range sa production. Pas besoin de tapis. Pour remplacer une chaîne existante, touche sa machine avec la Main.</p><div class="mlist">${ps.map(p=>{const c=autoCost(p,autoCount(p.id));return `<button class="mi" data-pk="auto:${p.id}" aria-pressed="${PICK.auto===p.id}"><b>${autoName(p)}</b><span class="recipe">${recipe(p)}</span><span class="cost">${costL(c)}</span></button>`}).join('')}</div>`}
- if(TOOL==='demo')return '<p class="hint">Touche un élément pour le démolir. Tout est remboursé, y compris les matières qu’il transportait.</p>';
- return `<p class="hint">Touche un distributeur pour y verser ${DIST_LOAD} matières. Touche un élément pour le voir, glisse-le pour le déplacer.</p>`}
+ if(TOOL==='belt')return tip()+(fastOK()?`<div class="orirow"><span>Tapis</span><button data-fast="0" aria-pressed="${!PICK.fast}">Normal ${costL(COST_BELT)}</button><button data-fast="1" aria-pressed="${!!PICK.fast}">Rapide ×2 ${costL(COST_FAST)}</button></div>`:'');
+ if(TOOL==='dist')return tip()+`<div class="strip2">${S.known.map(k=>`<button data-pk="dist:${k}" aria-pressed="${PICK.dist===k}" title="${RES[k].n}">${IC[k]}${autoK(k)?'<i class="au"></i>':''}</button>`).join('')}</div><div class="sline"><span>${RES[PICK.dist]?RES[PICK.dist].n:''}${autoK(PICK.dist)?' · automatique':''} · ${costL(COST_DIST)}</span>${oriHTML()}</div>`;
+ if(TOOL==='split')return tip()+`<div class="sline"><span>Répartiteur · ${costL(COST_SPLIT)}</span>${oriHTML()}</div>`;
+ if(TOOL==='mach'){const ps=POSTES.filter(p=>S.unlocked.includes(p.b)),p=PO[PICK.mach]&&S.unlocked.includes(PO[PICK.mach].b)?PO[PICK.mach]:ps[0];PICK.mach=p.id;return tip()+`<div class="strip2">${ps.map(q=>`<button data-pk="mach:${q.id}" aria-pressed="${p.id===q.id}">${IC[Object.keys(q.out)[0]]}<span>${SHORT[q.id]}</span></button>`).join('')}</div><div class="sline"><span><b>${p.n}</b>${BIG[p.id]?' 2×2':''} · ${recipe(p)}<br>${costL(p.cost)}</span>${oriHTML()}</div>`}
+ return tip()}
+const selB=(extra)=>`<div class="selb">${extra||''}<button class="btn sm ic" data-fx="rot" aria-label="Tourner">↻</button><button class="btn sm ic" data-fx="move" aria-label="Déplacer">✥</button><button class="btn sm ic ghost" data-fx="del" aria-label="Démolir">✕</button></div>`;
 function infoHTML(){const h=infoHTML0();return h?'<button class="fx-close" data-fx="close" aria-label="Fermer">×</button>'+h:''}
-function infoHTML0(){const e=SELE&&S.F.ents[SELE];if(!e)return'';if(MOVE===e.id)return `<div class="panel"><b>Déplacement</b><p class="hint">Touche une case libre de la grille. Touche l’élément lui-même pour annuler.</p><div class="selb"><button class="btn sm" data-fx="move">Annuler</button></div></div>`;
- if(e.t==='wh')return `<div class="panel"><b>Entrepôt</b><p class="hint">Tout ce qui arrive ici par un tapis est rangé dans ton stock : ${fmt(cap())} places par ressource. Il se développe dans l'onglet Entrepôt.</p></div>`;
- if(e.t==='belt')return `<div class="panel"><b>Tapis ${ARW[e.d]}</b><p class="hint">${e.item?`Transporte : ${RES[e.item.k].n.toLowerCase()}`:'Vide'}</p><div class="selb"><button class="btn sm" data-fx="rot">Tourner</button><button class="btn sm" data-fx="move">Déplacer</button><button class="btn sm ghost" data-fx="del">Démolir</button></div></div>`;
- if(e.t==='dist')return `<div class="panel"><div class="p-h"><b>Distributeur · ${RES[e.k].n}</b><span class="pst" data-fst></span></div><p class="hint">Stock : <b data-fv="${e.k}">${fmt(have(e.k))}</b> · Sens ${ARW[e.d]}</p>
-  <button class="tapb" data-fx="pour">Verser ${DIST_LOAD} ${RES[e.k].n.toLowerCase()}</button>
-  <div class="pick">${S.known.map(k=>`<button data-fk="${k}" aria-pressed="${e.k===k}" title="${RES[k].n}">${IC[k]}</button>`).join('')}</div>
-  <div class="selb"><button class="btn sm" data-fx="rot">Tourner</button><button class="btn sm" data-fx="move">Déplacer</button><button class="btn sm ghost" data-fx="del">Démolir</button></div></div>`;
- if(e.t==='mach'){const p=PO[e.r],bw=S.bossWon.includes(p.b),c=autoCost(p,autoCount(p.id)),n=chainOf(e).length;
-  return `<div class="panel"><div class="p-h"><b>${p.n}</b><span class="pst" data-fst></span></div><div class="recipe">${recipe(p)} <small class="hint">· ${fmtR(machT(p))} s par lot</small></div><p class="hint" data-fbuf></p>
-  <div class="selb"><button class="btn sm" data-fx="rot">Tourner ${ARW[e.d]}</button><button class="btn sm" data-fx="move">Déplacer</button><button class="btn sm ghost" data-fx="del">Démolir</button></div>
-  ${bw?`<div class="autobox"><b>Automatiser</b><p>Remplace cette chaîne (${n} élément${n>1?'s':''}, remboursé${n>1?'s':''}) par ${autoName(p)} sur une seule case. Elle puise et range directement dans l'entrepôt.</p><button class="btn sm main" data-fx="replace" data-need="${need(c)}">Remplacer la chaîne</button><div class="cost">${costL(c)}</div></div>`
-   :`<p class="hint">Bats ${D[BIOMES[p.b].boss].n} pour débloquer ${autoName(p)}.</p>`}</div>`}
- if(e.t==='auto'){const p=PO[e.r],uc=postUp(p,e.lv);
-  return `<div class="panel"><div class="p-h"><b>${autoName(p)} <small>niv. ${e.lv}</small></b><span class="pst" data-fst></span></div><div class="recipe">${recipe(p)} <small class="hint">· ${fmtR(e.lv/p.t)} lot/s</small></div>
-  <div class="selb"><button class="btn sm main" data-fx="upauto" data-need="${need(uc)}">Niveau ${e.lv+1}</button><button class="btn sm" data-fx="toggle">${e.off?'Relancer':'Pause'}</button><button class="btn sm" data-fx="move">Déplacer</button><button class="btn sm ghost" data-fx="del">Démolir</button></div><div class="cost">${costL(uc)}</div></div>`}
+function infoHTML0(){const e=SELE&&S.F.ents[SELE];if(!e)return'';
+ if(MOVE===e.id)return `<div class="panel"><b>Déplacement</b><p class="hint">Touche la case de destination.</p><div class="selb"><button class="btn sm" data-fx="move">Annuler</button></div></div>`;
+ if(e.t==='wh'){const n=S.F.docks||2,dc=DOCKC[n+1],gc=GRIDC[S.F.w],wc=whCost(S.wh);
+  return `<div class="panel"><b>Entrepôt</b><p class="hint">${n} quai${n>1?'s':''} de réception (zones jaunes). Un produit n'entre que par un quai.</p>
+  <div class="urow"><div><b>Quai ${n+1}</b></div>${n<DOCK_MAX?`<button class="btn sm" data-fx="dock" data-need="${need(dc)}">Ouvrir</button><div class="cost">${costL(dc)}</div>`:'<span class="hint">Max</span>'}</div>
+  <div class="urow"><div><b>Stock</b> <small>${fmt(cap())} → ${fmt(cap()*2)}</small></div><button class="btn sm" data-act="wh" data-need="${need(wc)}">Agrandir</button><div class="cost">${costL(wc)}</div></div>
+  ${gc&&S.F.w<GRID_MAX?`<div class="urow"><div><b>Terrain</b> <small>${S.F.w}×${S.F.h} → ${S.F.w+1}×${S.F.h+1}</small></div><button class="btn sm" data-fx="expand" data-need="${need(gc)}">Agrandir</button><div class="cost">${costL(gc)}</div></div>`:''}</div>`}
+ if(e.t==='belt')return `<div class="panel"><div class="p-h"><b>Tapis${e.fast?' rapide':''}</b><span class="hint">${e.item?RES[e.item.k].n:'Vide'}</span></div>${selB()}</div>`;
+ if(e.t==='split')return `<div class="panel"><div class="p-h"><b>Répartiteur</b><span class="hint">${e.item?RES[e.item.k].n:'Vide'}</span></div>${selB()}</div>`;
+ if(e.t==='dist'){const au=autoK(e.k);
+  return `<div class="panel"><div class="p-h"><b>${IC[e.k]} ${RES[e.k].n}</b><span class="pst" data-fst></span></div>
+  ${au?'':`<button class="tapb" data-fx="pour">Verser ${DIST_LOAD} · stock <b data-fv="${e.k}">${fmt(have(e.k))}</b></button>`}
+  ${selB(`${au?`<button class="btn sm" data-fx="toggle">${e.off?'Relancer':'Pause'}</button>`:''}<button class="btn sm" data-fx="kind">Matière</button>`)}
+  ${PICK.kind===e.id?`<div class="pick">${S.known.map(k=>`<button data-fk="${k}" aria-pressed="${e.k===k}" title="${RES[k].n}">${IC[k]}</button>`).join('')}</div>`:''}</div>`}
+ if(e.t==='mach'){const p=PO[e.r],lv=e.lv||1,c=lv<MACH_MAX?machUp(p,lv):null;
+  return `<div class="panel"><div class="p-h"><b>${p.n}${lv>1?` <small>N${lv}</small>`:''}</b><span class="pst" data-fst></span></div><div class="recipe">${recipe(p)} <small class="hint" data-fbuf></small></div>
+  ${selB(c?`<button class="btn sm main" data-fx="up" data-need="${need(c)}">Niveau ${lv+1}</button>`:'')}${c?`<div class="cost">${costL(c)} · ×${lv+1} vitesse</div>`:''}</div>`}
  return''}
 function renderFInfo(all){if(TAB!=='camp'||CT!=='grid'||!$('fTools'))return;setH($('fTools'),toolsHTML());if(all)setH($('fSub'),subHTML());setH($('fInfo'),infoHTML());liveFInfo()}
 function liveFInfo(){const box=$('fInfo');if(!box||!S)return;const e=SELE&&S.F.ents[SELE];
  box.querySelectorAll('[data-fv]').forEach(el=>{const t=fmt(have(el.dataset.fv));if(el.textContent!==t)el.textContent=t});
  const st=box.querySelector('[data-fst]');if(st&&e){let t='',c='';
-  if(e.t==='dist'){t=e.pend>0?(e.st==='blk'?`Bloqué · ${e.pend} en attente`:`Envoie · ${e.pend} en attente`):'Vide';c=e.pend>0?(e.st==='blk'?'blk':'run'):''}
-  if(e.t==='mach'){t=e.st==='run'?'Au travail':e.st==='full'?'Sortie bloquée':'Attend ses matières';c=e.st==='run'?'run':e.st==='full'?'full':'blk'}
-  if(e.t==='auto'){const p=PO[e.r];t=e.off?'En pause':e.blk?(e.blk.t==='in'?`Manque ${RES[e.blk.k].n.toLowerCase()}`:e.blk.t==='res'?`Garde ${AUTO_RES} ${RES[e.blk.k].n.toLowerCase()} en réserve`:'Stock plein'):`${fmtR(e.lv/p.t*Object.values(p.out)[0])} ${RES[Object.keys(p.out)[0]].n.toLowerCase()}/s`;c=e.off?'':e.blk?'blk':'run'}
+  if(e.t==='dist'){const au=autoK(e.k);t=e.off?'En pause':au?(e.st==='blk'?'Automatique · bloqué':have(e.k)<1&&!e.pend?'Automatique · stock vide':'Automatique'):e.pend>0?(e.st==='blk'?`Bloqué · ${e.pend}`:`${e.pend} à envoyer`):'Vide';c=e.off?'':e.st==='blk'?'blk':(au||e.pend)?'run':''}
+  if(e.t==='mach'){t=e.st==='run'?'Au travail':e.st==='full'?(e.noDock?'Pas de quai ici':'Sortie bloquée'):'Attend';c=e.st==='run'?'run':e.st==='full'?'full':'blk'}
   if(st.textContent!==t)st.textContent=t;st.className='pst '+c}
- const bf=box.querySelector('[data-fbuf]');if(bf&&e&&e.t==='mach'){const p=PO[e.r];const t='Contient : '+Object.keys(p.in).map(k=>`${e.buf[k]||0}/${p.in[k]} ${RES[k].n.toLowerCase()}`).join(', ');if(bf.textContent!==t)bf.textContent=t}
+ const bf=box.querySelector('[data-fbuf]');if(bf&&e&&e.t==='mach'){const p=PO[e.r];const t='· '+Object.keys(p.in).map(k=>`${Math.min(99,e.buf[k]||0)}/${p.in[k]}`).join(' ');if(bf.textContent!==t)bf.textContent=t}
  $('campBody').querySelectorAll('.cst').forEach(el=>el.classList.toggle('lack',have(el.dataset.k)<+el.dataset.n-1e-9));
  $('campBody').querySelectorAll('[data-need]').forEach(el=>{el.disabled=!canNeed(el.dataset.need)})}
 function fClick(t){const ds=t.dataset,e=SELE&&S.F.ents[SELE];
  if(ds.fx==='close'){SELE=null;MOVE=null;AU.fx('click');return renderFInfo(true)}
- if(ds.tool){TOOL=ds.tool;if(TOOL==='auto'&&!PICK.auto){const p=POSTES.find(p=>S.bossWon.includes(p.b));PICK.auto=p&&p.id}if(TOOL!=='hand'&&TOOL!=='demo')SELE=null;AU.fx('click');return renderFInfo(true)}
+ if(ds.tool){TOOL=ds.tool;S.tips=S.tips||{};S.tips[TOOL]=(S.tips[TOOL]||0)+1;if(TOOL!=='hand'&&TOOL!=='demo')SELE=null;AU.fx('click');return renderFInfo(true)}
  if(ds.pk){const[k,v]=ds.pk.split(':');PICK[k]=v;AU.fx('click');return renderFInfo(true)}
- if(ds.fk&&e&&e.t==='dist'){if(e.pend){add(e.k,e.pend);e.pend=0}e.k=ds.fk;AU.fx('click');return fChanged()}
+ if(ds.fast!=null){PICK.fast=+ds.fast;AU.fx('click');return renderFInfo(true)}
  if(ds.ori){ORI=+ds.ori;AU.fx('click');return renderFInfo(true)}
  if(ds.fx==='expand')return expandGrid();
+ if(ds.fx==='dock')return addDock();
  if(!e)return;
+ if(ds.fk&&e.t==='dist'){if(e.pend){add(e.k,e.pend);e.pend=0}e.k=ds.fk;PICK.kind=null;AU.fx('click');return fChanged()}
+ if(ds.fx==='kind'){PICK.kind=PICK.kind===e.id?null:e.id;AU.fx('click');return renderFInfo(true)}
  if(ds.fx==='pour')return pour(e);
- if(ds.fx==='rot'){e.d=(e.d+1)%4;AU.fx('click');return fChanged()}
+ if(ds.fx==='rot')return rotate(e);
  if(ds.fx==='del')return demolish(e);
- if(ds.fx==='move'){MOVE=MOVE===e.id?null:e.id;AU.fx('click');renderFInfo(true);if(MOVE)toast('Touche une case libre pour y déplacer l’élément');return}
- if(ds.fx==='replace')return replaceChain(e);
- if(ds.fx==='upauto')return upAuto(e);
+ if(ds.fx==='move'){MOVE=MOVE===e.id?null:e.id;AU.fx('click');return renderFInfo(true)}
+ if(ds.fx==='up')return upMach(e);
  if(ds.fx==='toggle'){e.off=!e.off;AU.fx('click');return fChanged()}}
-function migrateF(){if(S.F)return;starterF();const posts=S.posts||{};let refund={};
- for(const id in posts){const p=PO[id];if(!p)continue;if(S.bossWon.includes(p.b)){let placed=false;for(let y=0;y<S.F.h&&!placed;y++)for(let x=2;x<S.F.w&&!placed;x++)if(!fAt(x,y)&&y!==3){fAdd({t:'auto',x,y,d:0,r:id,lv:posts[id].lv||1,prog:0});placed=true}}
-  else for(const k in p.cost)refund[k]=(refund[k]||0)+p.cost[k]}
- for(const k in refund)add(k,refund[k]);delete S.posts}
+/* anciennes sauvegardes : les automates d'une case sont démontés et remboursés, les quais couvrent les tapis existants */
+function migrateF(){if(!S.F){starterF();const posts=S.posts||{};for(const id in posts){const p=PO[id];if(p)for(const k in p.cost)add(k,p.cost[k])}delete S.posts;return}
+ if(S.F.v>=3)return;let n=0;
+ for(const e of Object.values(S.F.ents)){if(e.t==='auto'){const p=PO[e.r];if(p){const c=scale(p.cost,1,2);for(const k in c)add(k,c[k]*(1+(e.lv||1)*.5))}delete S.F.ents[e.id];n++}else if(e.t==='mach'){e.lv=e.lv||1;if(BIG[e.r])e.sz=1}}
+ fIndex();const dc=dockCells();let need=2;for(const e of Object.values(S.F.ents)){if(e.t==='wh')continue;const f=frontOf(e);if(f&&f.t==='wh'){const c=fromCell(e);const i=dc.findIndex(d=>d[0]===c[0]&&d[1]===c[1]);if(i>=0)need=Math.max(need,i+1)}}
+ S.F.docks=Math.min(DOCK_MAX,need);S.F.v=3;if(n)S.migAuto=n}
 
 /* ---------- Musique & bruitages (générés en direct, style chiptune) ---------- */
 const AU=(()=>{
@@ -1535,6 +1615,10 @@ const scene=(()=>{
   path:(x,y,o)=>{R(x-2,y-42,4,42,'#6a4a2e');R(x-18,y-42,34,12,'#b48c5a');poly([x+16,y-42,x+24,y-36,x+16,y-30],'#b48c5a');R(x-14,y-38,24,2,'#6a4a2e');R(x-14,y-34,18,2,'#6a4a2e');R(x-14,y-26,26,10,'#9a7a4c');poly([x-14,y-26,x-22,y-21,x-14,y-16],'#9a7a4c')}
  };
  ['cache_foret','cache_collines','cache_mine','cache_marais','cache_grotte','cache_ruines'].forEach(k=>LOOK[k]=LOOK.cache);
+ LOOK.hub=(x,y,o)=>{const b=(D[o.d]||{}).b,col=b?BIOMES[b].c:'#4f8a45';ell(x,y+1,40,5,'rgba(0,0,0,.22)');R(x-34,y-34,68,34,'#8b8f96');R(x-34,y-34,68,3,'#a6aab0');for(let i=0;i<6;i++)R(x-34+i*12,y-31,2,31,'rgba(0,0,0,.12)');
+  poly([x-38,y-34,x,y-48,x+38,y-34],col);R(x-38,y-36,76,3,'rgba(0,0,0,.25)');R(x-12,y-24,24,24,'#3a3f47');for(let i=0;i<5;i++)R(x-12,y-24+i*5,24,1,'#555b64');R(x-30,y-6,4,6,'#f2cf4a');R(x+26,y-6,4,6,'#f2cf4a');
+  R(x+38,y-4,16,3,'#b08a5a');R(x+40,y-14,12,10,'#b8864f');R(x+44,y-14,3,10,'#d8b07a')};
+ ORDER.forEach(b=>LOOK['hub_'+b]=LOOK.hub);
  function monster(x,y,d,now,o){const t=now/1000;
   if(d==='gluant'){const b=Math.abs(Math.sin(t*4))*4;ell(x,y-9-b,17,12+b*.4,'#6cc35a');ell(x+4,y-6-b,10,6,'#4f9f45');R(x-7,y-14-b,4,5,'#fff');R(x+3,y-14-b,4,5,'#fff');R(x-6,y-12-b,2,3,'#1b2a1b');R(x+4,y-12-b,2,3,'#1b2a1b');R(x-9,y-20-b,4,2,'#b8f0a8')}
   if(d==='loup'){const b=Math.sin(t*6)*1.5;R(x-18,y-22+b,30,12,'#7d8088');R(x+8,y-30+b,14,12,'#8b8e96');poly([x+10,y-30+b,x+12,y-38+b,x+15,y-30+b],'#6d7078');poly([x+16,y-30+b,x+19,y-37+b,x+21,y-30+b],'#6d7078');R(x+20,y-24+b,7,5,'#9a9ca2');R(x+17,y-27+b,2,2,'#f2d24a');R(x-24,y-24+b,8,4,'#6d7078');R(x-15,y-10,4,10,'#5d6068');R(x-5,y-10,4,10,'#5d6068');R(x+3,y-10,4,10,'#5d6068')}
@@ -1674,14 +1758,16 @@ const scene=(()=>{
 $('bPass').onclick=()=>act('pass');
 $('bMain').onclick=()=>act($('bMain').dataset.k);
 $('bfHit').addEventListener('pointerdown',bfTap);$('bfHit').addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter')bfTap(e)});$('bfHit').onclick=e=>e.preventDefault();
-$('pageAdv').addEventListener('click',e=>{const t=e.target.closest('button');if(!t||t.disabled)return;if(t.dataset.bio)return switchBiome(t.dataset.bio);if(t.id==='bEat')return eatRation();if(t.id==='bDrink')return drinkPotion()});
+$('pageAdv').addEventListener('click',e=>{const t=e.target.closest('button');if(!t||t.disabled)return;if(t.dataset.bio){if(t.dataset.bio===S.biome)return openHub(S.biome);return switchBiome(t.dataset.bio)}if(t.id==='bEat')return eatRation();if(t.id==='bDrink')return drinkPotion()});
 $('tAdv').onclick=()=>{AU.fx('click');setTab('adv')};$('tCamp').onclick=()=>{AU.fx('click');setTab('camp')};
 document.querySelectorAll('.subtabs button').forEach(b=>b.onclick=()=>{CT=b.dataset.ct;AU.fx('click');renderCamp();window.scrollTo({top:0})});
 $('campBody').addEventListener('click',e=>{const t=e.target.closest('button');if(!t||t.disabled)return;const ds=t.dataset;
- if(ds.tool||ds.pk||ds.fk||ds.fx||ds.ori)return fClick(t);
+ if(ds.tool||ds.pk||ds.fk||ds.fx||ds.ori||ds.fast!=null)return fClick(t);
  if(ds.tap)return tapPost(ds.tap,t);if(ds.build)return buildPost(ds.build);if(ds.pup)return upPost(ds.pup);if(ds.tog)return togPost(ds.tog);
  if(ds.coll)return upColl(ds.coll);if(ds.fork)return buyFork(ds.fork);if(ds.out)return upOut(ds.out);if(ds.hero)return upHero(ds.hero);if(ds.gear)return craftGear(ds.gear);
  if(ds.act==='wh')return upWh();if(ds.act==='pioche')return buyPioche()});
+$('hub').addEventListener('click',e=>{if(e.target.id==='hub'||e.target.id==='hubX')return closeHub();const t=e.target.closest('button');if(!t||t.disabled)return;const ds=t.dataset;
+ if(ds.coll)upColl(ds.coll);else if(ds.fork)buyFork(ds.fork);else if(ds.out)upOut(ds.out);else if(ds.hero)upHero(ds.hero);else if(ds.gear)craftGear(ds.gear);else if(ds.act==='pioche')buyPioche();renderHub()});
 $('bRules').onclick=()=>$('rules').hidden=false;
 $('bJournal').onclick=openJournal;$('mJournal').onclick=openJournal;$('journal').onclick=e=>{if(e.target.id==='journal')$('journal').hidden=true};
 $('goal').addEventListener('click',e=>{const t=e.target.closest('[data-q]');if(!t)return;if(t.dataset.q==='claim')claimQ();else goQ()});
@@ -1716,7 +1802,7 @@ function tick(){if(!S)return;const now=performance.now();let dt=(now-lastT)/1000
  if($('menu').hidden&&!document.hidden&&!BF)S.time+=dt*1000;else if(BF)S.time+=dt*1000;
  updHero();
  if(TAB==='camp')liveCamp();else if(!BF){renderAdv(false)}
- saveT+=dt;if(saveT>=1){saveT=0;renderGoal();if((tickN=(tickN||0)+1)%5===0)save()}}
+ saveT+=dt;if(saveT>=1){saveT=0;renderGoal();if(!$('hub').hidden)renderHub();if((tickN=(tickN||0)+1)%5===0)save()}}
 setInterval(tick,250);
 requestAnimationFrame(campLoop);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)save();else tick()});
